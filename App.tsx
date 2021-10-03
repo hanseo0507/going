@@ -1,115 +1,89 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
+  PermissionsAndroid,
+  Platform,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
+import MapboxGL from '@react-native-mapbox-gl/maps';
+import Geolocation from 'react-native-geolocation-service';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+// prettier-ignore
+MapboxGL.setAccessToken('pk.eyJ1IjoiaGFuc2VvMDUwNyIsImEiOiJja3ViY25oY2wwcDlmMm5tbzllMGkwNWI4In0.8gwFWP3KrrHWwfIRbRDWWw');
 
-const Section: React.FC<{
-  title: string;
-}> = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+const styles = StyleSheet.create({
+  page: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  container: {
+    height: '100%',
+    width: '100%',
+  },
+  map: {
+    flex: 1,
+  },
+});
+
+const App: React.FC = () => {
+  const [coords, setCoords] = useState<number[]>([0, 0]);
+
+  useEffect(() => {
+    async function getLocation() {
+      Geolocation.getCurrentPosition(
+        position => {
+          console.log(position);
+          const {latitude, longitude} = position.coords;
+
+          setCoords([longitude, latitude]);
+        },
+        error => {
+          console.log('error', error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    }
+
+    async function requestPermissions() {
+      if (Platform.OS === 'ios') {
+        Geolocation.requestAuthorization('always');
+        getLocation();
+      }
+
+      if (Platform.OS === 'android') {
+        await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
+        getLocation();
+      }
+    }
+
+    requestPermissions();
+  }, []);
+
+  return coords[0] !== 0 && coords[1] !== 0 ? (
+    <View style={styles.page}>
+      <View style={styles.container}>
+        {
+          <MapboxGL.MapView
+            style={styles.map}
+            styleURL="mapbox://styles/hanseo0507/ckubdhvht8c2z19qjr8jxvbx6"
+            zoomEnabled={true}>
+            <MapboxGL.Camera zoomLevel={15} centerCoordinate={coords} />
+          </MapboxGL.MapView>
+        }
+      </View>
+    </View>
+  ) : (
+    <View style={styles.page}>
+      <View style={styles.container}>
+        <Text>위치 권한을 허용해주세요</Text>
+      </View>
     </View>
   );
 };
-
-const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
 
 export default App;
