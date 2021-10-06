@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import Geolocation from 'react-native-geolocation-service';
-import Button from './components/Button';
 import HomeScreen from './screens/Home/HomeScreen';
 
 const App: React.FC = () => {
