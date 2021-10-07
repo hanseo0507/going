@@ -10,6 +10,7 @@ import {
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import Geolocation from 'react-native-geolocation-service';
 import Button from '../../components/Button';
+import {SearchBar} from 'react-native-screens';
 
 // prettier-ignore
 MapboxGL.setAccessToken('pk.eyJ1IjoiaGFuc2VvMDUwNyIsImEiOiJja3ViY25oY2wwcDlmMm5tbzllMGkwNWI4In0.8gwFWP3KrrHWwfIRbRDWWw');
@@ -79,7 +80,7 @@ const MapScreen: React.FC = () => {
             </MapboxGL.MapView>
 
             <View>
-              <Button></Button>
+              <SearchBar placeholder="장소 검색하기..." />
             </View>
           </View>
         }

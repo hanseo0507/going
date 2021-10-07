@@ -1,13 +1,17 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, SafeAreaView, Text} from 'react-native';
+import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
+import SearchBar from '../../components/SearchBar';
 import {UI_WHITE} from '../../utils/color/UiColor';
 
-interface IProps {}
+interface IProps {
+  navigation: any;
+}
 
-const HomeScreen: React.FC<IProps> = () => {
+const HomeScreen: React.FC<IProps> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
+      <Button title="Go to map" onPress={() => navigation.navigate('Map')} />
       <Text>안녕하세요 사용자님 ✋</Text>
     </SafeAreaView>
   );
