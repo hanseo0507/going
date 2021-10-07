@@ -1,37 +1,42 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Text} from 'react-native';
-import {TEXT_TITLE} from '../utils/color/TextColor';
+import {TEXT_TITLE} from '../utils/color';
+import {UI_WHITE} from '../utils/color';
 
-interface IProps {}
+interface IProps {
+  label: string;
+  onPress: () => void;
+}
 
-const Button: React.FC<IProps> = () => {
+const Button: React.FC<IProps> = props => {
   return (
-    <TouchableOpacity style={[styles.container]}>
-      <Text>안녕하세요</Text>
+    <TouchableOpacity style={styles.container} onPress={() => props.onPress()}>
+      <Text style={styles.label}>{props.label}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: 100,
-    height: 100,
+    width: 320,
+    height: 40,
     backgroundColor: TEXT_TITLE,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
-    shadowColor: '#000',
+    shadowColor: UI_WHITE,
     shadowOffset: {
       width: 0,
       height: 1,
     },
     shadowOpacity: 0.22,
     shadowRadius: 2.22,
-
     elevation: 3,
   },
-  label: {},
+  label: {
+    color: UI_WHITE,
+  },
 });
 
 export default Button;

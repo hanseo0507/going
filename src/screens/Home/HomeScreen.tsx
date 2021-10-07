@@ -1,8 +1,9 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
-import SearchBar from '../../components/SearchBar';
-import {UI_WHITE} from '../../utils/color/UiColor';
+import {StyleSheet, SafeAreaView, Text, View, Animated} from 'react-native';
+import Button from '../../components/Button';
+import MapComponents from '../../components/Map';
+import {UI_WHITE} from '../../utils/color';
 
 interface IProps {
   navigation: any;
@@ -10,22 +11,42 @@ interface IProps {
 
 const HomeScreen: React.FC<IProps> = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.container}>
-      <Button title="Go to map" onPress={() => navigation.navigate('Map')} />
-      <Text>안녕하세요 사용자님 ✋</Text>
-    </SafeAreaView>
+    <>
+      <Button label="맵" onPress={() => navigation.navigate('Map')} />
+      <SafeAreaView style={styles.container}>
+        <View style={styles.greetLayer}>
+          <Text style={styles.greet}>안녕하세요 사용자님 ✋</Text>
+        </View>
+        <View style={styles.font}></View>
+        <View style={styles.font}>
+          <Text>힘든길 및 새로운 기술</Text>
+        </View>
+      </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
     backgroundColor: UI_WHITE,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    marginTop: 130,
   },
-  scrollContainer: {
-    width: '100%',
+  font: {
+    marginTop: 50,
+    flex: 1,
+  },
+  greetLayer: {
+    alignItems: 'flex-start',
+    flex: 1,
+  },
+  greet: {
+    fontSize: 28,
+    fontWeight: '900',
+    marginTop: 60,
+    marginLeft: 25,
   },
 });
 

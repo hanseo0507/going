@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {StyleSheet, TextInputProps, View} from 'react-native';
-import {TEXT_TITLE} from '../utils/color/TextColor';
-import {UI_WHITE} from '../utils/color/UiColor';
+import {TEXT_TITLE} from '../utils/color';
+import {UI_WHITE} from '../utils/color';
 import Input from './Input';
 
 interface IProps extends TextInputProps {}
