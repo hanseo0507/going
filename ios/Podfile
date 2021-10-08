@@ -12,6 +12,10 @@ target 'going' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   target 'goingTests' do
     inherit! :complete
     # Pods for testing
