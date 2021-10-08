@@ -5,7 +5,7 @@ import {StyleSheet, TextInput, TextInputProps} from 'react-native';
 interface IProps extends TextInputProps {}
 
 const Input: React.FC<IProps> = ({...props}) => {
-  return <TextInput style={[styles.container, ,]} {...props}></TextInput>;
+  return <TextInput style={[styles.container]} {...props}></TextInput>;
 };
 
 const styles = StyleSheet.create({

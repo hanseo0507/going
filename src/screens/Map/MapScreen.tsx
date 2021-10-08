@@ -40,7 +40,11 @@ const MapScreen: React.FC = () => {
     requestPermissions();
   }, []);
 
-  return <MapComponents coords={coords} />;
+  return (
+    <>
+      <MapComponents coords={coords} />
+    </>
+  );
 };
 
 export default MapScreen;
