@@ -1,10 +1,11 @@
 import React from 'react';
 
-import MapScreen from './screens/Map/MapScreen';
-import HomeScreen from './screens/Home/HomeScreen';
+import MapScreen from './screens/MapScreen';
+import HomeScreen from './screens/HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {StatusBar} from 'react-native';
+import FacilityActivationScreen from './screens/FacilityActivationScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,10 @@ const App: React.FC = () => {
         <Stack.Navigator initialRouteName="Home" headerMode="none">
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Map" component={MapScreen} />
+          <Stack.Screen
+            name="Activation"
+            component={FacilityActivationScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>

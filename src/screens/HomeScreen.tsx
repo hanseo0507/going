@@ -1,10 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {StyleSheet, SafeAreaView, Text, View} from 'react-native';
-import {UI_WHITE} from '../../utils/color';
-import MapScreen from '../Map/MapScreen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import BottomSheet from 'reanimated-bottom-sheet';
-import FooterButton from '../../components/Footer';
+
+import {UI_WHITE} from '../utils/color';
+import FooterButton from '../components/Footer';
+import FacilityComponents from '../components/Facility';
+import MapScreen from './MapScreen';
 
 interface IProps {}
 
@@ -15,14 +22,20 @@ const HomeScreen: React.FC<IProps> = () => {
       <View style={styles.greetLayer}>
         <Text style={styles.greet}>안녕하세요 사용자님 ✋</Text>
       </View>
+      <FacilityComponents />
+
+      <View style={styles.greetLayer}>
+        <Text>ddsadasd</Text>
+      </View>
     </View>
   );
+
   return (
     <SafeAreaView style={styles.container}>
       <MapScreen />
       <BottomSheet
         ref={sheetRef}
-        snapPoints={[490, 300, 0]}
+        snapPoints={[hp('85%'), 300, 0]}
         borderRadius={10}
         renderContent={renderContent}
       />
@@ -35,23 +48,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: UI_WHITE,
+    justifyContent: 'space-between',
   },
   bottomSheet: {
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: 'white',
-    padding: 16,
-    height: 490,
+    padding: 30,
+    height: hp('82%'),
   },
   greetLayer: {
     alignItems: 'flex-start',
     flex: 1,
   },
   greet: {
-    fontSize: 20,
+    fontSize: wp('6%'),
     fontWeight: '900',
     marginTop: 20,
-    marginLeft: 10,
   },
 });
 
