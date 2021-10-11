@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, SafeAreaView, Text, View} from 'react-native';
+import {StyleSheet, SafeAreaView, View} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import BottomSheet from 'reanimated-bottom-sheet';
+import Text from '../components/Text';
 
 import {UI_WHITE} from '../utils/color';
 import FooterButton from '../components/Footer';
@@ -20,7 +21,9 @@ const HomeScreen: React.FC<IProps> = () => {
   const renderContent = () => (
     <View style={styles.bottomSheet}>
       <View style={styles.greetLayer}>
-        <Text style={styles.greet}>안녕하세요 사용자님 ✋</Text>
+        <Text style={styles.greet} weight={700}>
+          안녕하세요 사용자님 ✋
+        </Text>
       </View>
       <FacilityComponents />
 

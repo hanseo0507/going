@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, TouchableOpacity, Text} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import Text from './Text';
 import {TEXT_TITLE} from '../utils/color';
 import {UI_WHITE} from '../utils/color';
 

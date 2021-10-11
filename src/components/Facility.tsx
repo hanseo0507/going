@@ -1,12 +1,13 @@
 /* eslint-disable prettier/prettier */
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {TEXT_CAPTION, UI_LINE, UI_WHITE} from '../utils/color';
+import Text from '../components/Text';
 
 interface IProps {}
 
