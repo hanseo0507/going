@@ -18,7 +18,8 @@ interface IProps {}
 
 const HomeScreen: React.FC<IProps> = () => {
   const sheetRef: any = React.useRef<HTMLDivElement>(null); // 타입 재설정 필요
-  const renderContent = () => (
+
+  const BottomSheetContent: React.ReactNode = () => (
     <View style={styles.bottomSheet}>
       <View style={styles.greetLayer}>
         <Text style={styles.greet} weight={700}>
@@ -40,7 +41,7 @@ const HomeScreen: React.FC<IProps> = () => {
         ref={sheetRef}
         snapPoints={[hp('85%'), 300, 0]}
         borderRadius={10}
-        renderContent={renderContent}
+        renderContent={() => BottomSheetContent}
       />
       <FooterButton sheetRef={sheetRef} />
     </SafeAreaView>
