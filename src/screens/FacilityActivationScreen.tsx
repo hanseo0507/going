@@ -12,9 +12,9 @@ const FacilityActivationScreen: React.FC<IProps> = () => {
 
   return (
     <View>
-      {/* <SearchBar /> */}
+      <SearchBar />
 
-      <Button onPress={() => navigation.goBack()} label={'테스팅'} />
+      {/* <Button onPress={() => navigation.goBack()} label={'테스팅'} /> */}
     </View>
   );
 };

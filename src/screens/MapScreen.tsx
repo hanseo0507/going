@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
-import {PermissionsAndroid, Platform, View} from 'react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
 import MapComponents from '../components/Map';
 
 const MapScreen: React.FC = () => {

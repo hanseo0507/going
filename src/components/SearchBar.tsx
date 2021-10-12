@@ -5,7 +5,7 @@ import {TEXT_DEFAULT, TEXT_DISABLE} from '../utils/color';
 
 interface IProps extends TextInputProps {}
 
-const SearchBar: React.FC<IProps> = ({...props}) => {
+const SearchBar: React.FC<IProps> = () => {
   return (
     <View style={styles.container}>
       <View style={styles.textInput}>

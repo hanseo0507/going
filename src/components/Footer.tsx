@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   Footer: {
     position: 'absolute',
     zIndex: 2,
-    top: hp('97.5%'),
+    top: hp('99.5%'),
     width: '100%',
     height: hp('10%'),
     borderRadius: 50, // 들어가는데 하단 백그라운드가 흰색이라 몰랐던거 ㄹㅈㄷ
