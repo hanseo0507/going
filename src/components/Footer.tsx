@@ -5,7 +5,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {UI_WHITE} from '../utils/color';
+import {UI_LINE, UI_WHITE} from '../utils/color';
 
 interface IProps {
   sheetRef: any; // 타입 재설정 필요
@@ -15,25 +15,30 @@ const FooterButton: React.FC<IProps> = ({sheetRef}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={styles.Footer}
+      style={styles.footer}
       onPress={() => sheetRef.current.snapTo(0)}>
-      <View />
+      <View style={styles.line} />
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  Footer: {
+  footer: {
+    position: 'absolute',
+    zIndex: 2,
+    top: hp('96.5%'),
     width: '100%',
-    height: hp('6%'),
-    borderRadius: 50, // 볼더가 안 들어감
-    backgroundColor: 'white',
-  },
-
-  FooterLine: {
-    width: wp('10%'),
     height: hp('10%'),
-    backgroundColor: 'black',
+    borderRadius: 50,
+    backgroundColor: UI_WHITE,
+    alignItems: 'center',
+  },
+  line: {
+    width: wp('8%'),
+    height: hp('0.2%'),
+    marginTop: hp('1%'),
+    backgroundColor: UI_LINE,
+    borderRadius: 50,
   },
 });
 

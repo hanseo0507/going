@@ -1,11 +1,10 @@
 import React from 'react';
-
-import MapScreen from './screens/MapScreen';
-import HomeScreen from './screens/HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {StatusBar} from 'react-native';
 import FacilityActivationScreen from './screens/FacilityActivationScreen';
+import MapScreen from './screens/MapScreen';
+import HomeScreen from './screens/HomeScreen';
 
 const Stack = createStackNavigator();
 

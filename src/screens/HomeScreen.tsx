@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {StyleSheet, SafeAreaView, View} from 'react-native';
@@ -8,11 +7,11 @@ import {
 } from 'react-native-responsive-screen';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Text from '../components/Text';
-
 import {UI_WHITE} from '../utils/color';
 import FooterButton from '../components/Footer';
 import FacilityComponents from '../components/Facility';
 import MapScreen from './MapScreen';
+import HardRoadComponents from '../components/HardRoad';
 
 interface IProps {}
 
@@ -28,9 +27,8 @@ const HomeScreen: React.FC<IProps> = () => {
           </Text>
         </View>
         <FacilityComponents />
-
         <View style={styles.greetLayer}>
-          <Text>ddsadasd</Text>
+          <HardRoadComponents />
         </View>
       </View>
     );
@@ -57,20 +55,19 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   bottomSheet: {
+    padding: hp('2.5%'),
+    height: hp('85%'),
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: 'white',
-    padding: 30,
-    height: hp('82%'),
   },
   greetLayer: {
-    alignItems: 'flex-start',
     flex: 1,
+    alignItems: 'flex-start',
   },
   greet: {
     fontSize: wp('6%'),
-    fontWeight: '900',
-    marginTop: 20,
+    marginTop: hp('1%'),
   },
 });
 
