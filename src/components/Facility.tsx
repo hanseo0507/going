@@ -7,8 +7,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {TEXT_CAPTION, UI_LINE, UI_WHITE} from '../utils/color';
 import Text from '../components/Text';
+import {TEXT_CAPTION, UI_LINE, UI_WHITE} from '../utils/color';
 
 interface IProps {}
 
@@ -16,40 +16,41 @@ const FacilityComponents: React.FC<IProps> = () => {
   const navigation: any = useNavigation();
 
   return (
-    <View style={[styles.facilityContainer, styles.elevation]}>
+    <View style={[styles.container, styles.elevation]}>
       <TouchableOpacity
-        style={styles.facilityHeader}
+        style={styles.header}
         onPress={() => {
           navigation.navigate('Activation');
         }}>
         <View style={styles.facility}>
-          <Text style={styles.facilityTitle} weight={500}>
+          <Text style={styles.title} weight={500}>
             시설
           </Text>
-          <View style={styles.CountContainer}>
-            <Text style={styles.CountText}>0</Text>
+          <View style={styles.countContainer}>
+            <Text style={styles.countText}>0</Text>
           </View>
         </View>
-        <Text style={styles.facilityCaption} weight={400}>
+        <Text style={styles.caption} weight={400}>
           활성화된 시설
         </Text>
       </TouchableOpacity>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
-  facilityContainer: {
-    top: hp('-13%'),
-    flex: 1,
+  container: {
     alignItems: 'flex-start',
     backgroundColor: UI_WHITE,
+    top: hp('-13%'),
+    flex: 1,
   },
   elevation: {
     elevation: 25,
-    shadowColor: '#B8B8B8',
     borderRadius: 15,
+    shadowColor: '#B8B8B8',
   },
-  facilityHeader: {
+  header: {
     marginLeft: wp('4%'),
     width: '100%',
   },
@@ -57,27 +58,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  facilityTitle: {
+  title: {
     marginRight: wp('1%'),
     fontSize: wp('5%'),
   },
-  facilityCaption: {
-    top: hp('-3%'),
+  caption: {
     fontSize: wp('3.5%'),
+    top: hp('-2.5%'),
     marginTop: hp('0.2%'),
     color: TEXT_CAPTION,
   },
-  CountContainer: {
+  countContainer: {
     width: wp('5%'),
-    height: hp('3%'),
+    height: hp('2.5%'),
     backgroundColor: UI_LINE,
     borderRadius: 300,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  CountText: {
+  countText: {
     position: 'absolute',
-    top: hp('-1.5%'),
     fontSize: wp('4%'),
   },
 });

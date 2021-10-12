@@ -68,7 +68,6 @@ const styles = StyleSheet.create({
   greet: {
     fontSize: wp('6%'),
     marginTop: hp('1%'),
-    fontWeight: '900',
   },
 });
 

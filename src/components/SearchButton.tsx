@@ -17,7 +17,7 @@ const SearchButton: React.FC = () => {
           onPress={() => {
             navigation.navigate('Activation');
           }}>
-          <Text style={styles.Caption}>장소 검색하기...</Text>
+          <Text style={styles.caption}>장소 검색하기...</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     color: TEXT_DEFAULT,
     textDecorationLine: 'none',
   },
-  Caption: {
+  caption: {
     padding: 15,
   },
 });

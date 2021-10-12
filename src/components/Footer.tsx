@@ -15,26 +15,25 @@ const FooterButton: React.FC<IProps> = ({sheetRef}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.8}
-      style={styles.Footer}
+      style={styles.footer}
       onPress={() => sheetRef.current.snapTo(0)}>
-      <View style={styles.FooterLine} />
+      <View style={styles.line} />
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  Footer: {
+  footer: {
     position: 'absolute',
     zIndex: 2,
-    top: hp('99.5%'),
+    top: hp('96.5%'),
     width: '100%',
     height: hp('10%'),
-    borderRadius: 50, // 들어가는데 하단 백그라운드가 흰색이라 몰랐던거 ㄹㅈㄷ
+    borderRadius: 50,
     backgroundColor: UI_WHITE,
     alignItems: 'center',
   },
-
-  FooterLine: {
+  line: {
     width: wp('8%'),
     height: hp('0.2%'),
     marginTop: hp('1%'),
