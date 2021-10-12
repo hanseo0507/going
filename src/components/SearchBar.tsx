@@ -1,43 +1,51 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, TextInputProps, View} from 'react-native';
-import {TEXT_TITLE} from '../utils/color';
-import {UI_WHITE} from '../utils/color';
-import Input from './Input';
+import {StyleSheet, TextInput, TextInputProps, View} from 'react-native';
+import {TEXT_DEFAULT, TEXT_DISABLE} from '../utils/color';
 
 interface IProps extends TextInputProps {}
 
 const SearchBar: React.FC<IProps> = ({...props}) => {
   return (
-    <View style={[styles.container]}>
-      <Input style={styles.input} {...props} />
+    <View style={styles.container}>
+      <View style={styles.textInput}>
+        <TextInput
+          placeholder="장소 검색하기..."
+          placeholderTextColor={TEXT_DISABLE}
+          style={styles.searchBar}
+        />
+
+        {/* <MatGeocoder
+          inputPlaceholder="Search Address"
+          accessToken={
+            'pk.eyJ1IjoiaGFuc2VvMDUwNyIsImEiOiJja3ViY25oY2wwcDlmMm5tbzllMGkwNWI4In0.8gwFWP3KrrHWwfIRbRDWWw'
+          }
+          onSelect={onSelectHandler}
+          showLoader={true}
+          {...geocoderApiOptions}
+        /> */}
+      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width: 1000,
-    height: 100,
-    position: 'relative',
+    top: 50,
+    position: 'absolute',
+    width: '100%',
+    alignItems: 'center',
+    zIndex: 1,
   },
-  input: {
-    width: 650,
-    height: 40,
-    borderRadius: 8,
-    paddingLeft: 100,
-    fontFamily: TEXT_TITLE,
-    fontSize: 18,
-    color: UI_WHITE,
-    backgroundColor: UI_WHITE,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.22,
-    shadowRadius: 2.22,
-    elevation: 3,
+  textInput: {
+    width: '90%',
+  },
+  searchBar: {
+    width: '100%',
+    backgroundColor: 'white',
+    borderRadius: 5,
+    paddingLeft: 25,
+    color: TEXT_DEFAULT,
+    textDecorationLine: 'none',
   },
 });
 export default SearchBar;

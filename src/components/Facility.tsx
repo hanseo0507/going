@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,7 +12,6 @@ interface IProps {}
 
 const FacilityComponents: React.FC<IProps> = () => {
   const navigation: any = useNavigation();
-
   return (
     <View style={[styles.facilityContainer, styles.elevation]}>
       <TouchableOpacity
@@ -33,14 +32,14 @@ const FacilityComponents: React.FC<IProps> = () => {
 };
 const styles = StyleSheet.create({
   facilityContainer: {
-    flex: 1,
     top: hp('-13%'),
+    flex: 1,
     alignItems: 'flex-start',
     backgroundColor: UI_WHITE,
   },
   facilityHeader: {
-    width: '100%',
     marginLeft: wp('5%'),
+    width: '100%',
   },
   facility: {
     marginTop: hp('2%'),
@@ -53,8 +52,8 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   facilityCaption: {
-    marginTop: hp('0.2%'),
     fontSize: wp('3.5%'),
+    marginTop: hp('0.2%'),
     color: TEXT_CAPTION,
   },
   CountContainer: {
@@ -68,7 +67,10 @@ const styles = StyleSheet.create({
   CountText: {
     fontSize: wp('4%'),
   },
-  elevation: {elevation: 25, shadowColor: '#D4D4D4', borderRadius: 15},
+  elevation: {
+    elevation: 25,
+    shadowColor: '#D4D4D4',
+    borderRadius: 15,
+  },
 });
-
 export default FacilityComponents;

@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
-import MapComponents from '../components/Map';
 import Geolocation from 'react-native-geolocation-service';
-import {PermissionsAndroid, Platform} from 'react-native';
+import {PermissionsAndroid, Platform, View} from 'react-native';
+import MapComponents from '../components/Map';
 
 const MapScreen: React.FC = () => {
   const [coords, setCoords] = useState<number[]>([0, 0]);
