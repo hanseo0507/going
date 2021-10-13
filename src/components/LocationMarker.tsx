@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-export interface LocationMakerProps {
+export interface LocationMarkerProps {
   fill?: string;
   border?: string;
 }
 
-const Maker = styled.View<LocationMakerProps>`
+const Marker = styled.View<LocationMarkerProps>`
   height: 20;
   width: 20;
   background-color: ${props => props.fill || '#434BFF'};
@@ -15,8 +15,8 @@ const Maker = styled.View<LocationMakerProps>`
   border-radius: 50;
 `;
 
-const LocationMaker: React.FC<LocationMakerProps> = ({...props}) => {
-  return <Maker {...props} />;
+const LocationMarker: React.FC<LocationMarkerProps> = ({...props}) => {
+  return <Marker {...props} />;
 };
 
-export default LocationMaker;
+export default LocationMarker;

@@ -5,7 +5,7 @@ import MapboxGL, {RegionPayload} from '@react-native-mapbox-gl/maps';
 import SearchButton from './SearchButton';
 
 import {IFacility} from '../types/facility';
-import LocationMaker from './LocationMarker';
+import LocationMarker from './LocationMarker';
 
 // prettier-ignore
 MapboxGL.setAccessToken('pk.eyJ1IjoiaGFuc2VvMDUwNyIsImEiOiJja3ViY25oY2wwcDlmMm5tbzllMGkwNWI4In0.8gwFWP3KrrHWwfIRbRDWWw');
@@ -74,7 +74,7 @@ const MapComponents: React.FC<MapComponentsProps> = ({
               key={i}
               id="mapbox_facility_position"
               coordinate={v.location.coordinates}>
-              <LocationMaker />
+              <LocationMarker />
             </MapboxGL.PointAnnotation>
           );
         })}
