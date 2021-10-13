@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import {PermissionsAndroid, Platform} from 'react-native';
 import MapComponents from '../components/Map';
-import MapboxGL from '@react-native-mapbox-gl/maps';
+import MapboxGL, {RegionPayload} from '@react-native-mapbox-gl/maps';
 
 import axios from 'axios';
 import {IFacility} from '../types/facility';
@@ -21,6 +21,25 @@ const MapScreen: React.FC = () => {
       setCoords([longitude, latitude]);
     }
     setHeading(location.coords.heading || 0);
+  };
+
+  const onRegionDidChange = async (
+    location: GeoJSON.Feature<GeoJSON.Point, RegionPayload>,
+  ) => {
+    const {coordinates} = location.geometry;
+    const {data} = await axios.get<IFacility[]>(
+      'https://going.run.goorm.io/facilities',
+      {
+        params: {
+          lng: coordinates[0],
+          lat: coordinates[1],
+          distance: 5000,
+          limit: 50,
+        },
+      },
+    );
+
+    setFacilities(data);
   };
 
   useEffect(() => {
@@ -78,6 +97,7 @@ const MapScreen: React.FC = () => {
           initializeCoords={coords}
           heading={heading}
           onUpdate={onUpdate}
+          onRegionDidChange={onRegionDidChange}
           facilities={facilities}
           zoomLevel={zoomLevel}
         />

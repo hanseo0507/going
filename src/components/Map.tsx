@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import MapboxGL from '@react-native-mapbox-gl/maps';
+import MapboxGL, {RegionPayload} from '@react-native-mapbox-gl/maps';
 import SearchButton from './SearchButton';
 
 import {IFacility} from '../types/facility';
@@ -22,6 +22,9 @@ interface MapComponentsProps {
   heading: number;
   zoomLevel: number;
   onUpdate?: (location: MapboxGL.Location) => void;
+  onRegionDidChange?: (
+    feature: GeoJSON.Feature<GeoJSON.Point, RegionPayload>,
+  ) => void;
 
   facilities: IFacility[];
 }
@@ -30,6 +33,7 @@ const MapComponents: React.FC<MapComponentsProps> = ({
   initializeCoords,
   heading,
   onUpdate,
+  onRegionDidChange,
   facilities,
 }) => {
   return (
@@ -41,7 +45,8 @@ const MapComponents: React.FC<MapComponentsProps> = ({
         zoomEnabled={true}
         logoEnabled={false}
         attributionEnabled={false}
-        localizeLabels={true}>
+        localizeLabels={true}
+        onRegionDidChange={onRegionDidChange}>
         <MapboxGL.Camera
           centerCoordinate={initializeCoords}
           zoomLevel={17}
