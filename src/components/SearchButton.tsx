@@ -25,8 +25,8 @@ const SearchButton: React.FC = () => {
           }}>
           <Icon
             name="search-outline"
-            width={wp('4.3%')}
-            height={hp('4.3%')}
+            width={wp('4.4%')}
+            height={hp('4.4%')}
             fill={TEXT_CAPTION}
           />
           <Text style={styles.caption}>장소 검색하기...</Text>
@@ -54,13 +54,15 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     borderRadius: 5,
-    paddingLeft: 15,
-    paddingTop: 2,
+    paddingLeft: 20,
+    paddingTop: 3,
+    paddingBottom: 3,
     color: TEXT_DEFAULT,
     textDecorationLine: 'none',
   },
   caption: {
     padding: 10,
+    fontSize: 14,
     color: TEXT_CAPTION,
   },
 });
