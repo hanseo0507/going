@@ -1,8 +1,15 @@
 /* eslint-disable prettier/prettier */
+
 import {useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {TEXT_DEFAULT} from '../utils/color';
+import {Icon} from 'react-native-eva-icons';
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {TEXT_CAPTION, TEXT_DEFAULT} from '../utils/color';
 
 const SearchButton: React.FC = () => {
   const navigation: any = useNavigation();
@@ -16,6 +23,12 @@ const SearchButton: React.FC = () => {
           onPress={() => {
             navigation.navigate('LocationSearch');
           }}>
+          <Icon
+            name="search-outline"
+            width={wp('4.3%')}
+            height={hp('4.3%')}
+            fill={TEXT_CAPTION}
+          />
           <Text style={styles.caption}>장소 검색하기...</Text>
         </TouchableOpacity>
       </View>
@@ -24,7 +37,7 @@ const SearchButton: React.FC = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    top: 60,
+    top: 35,
     position: 'absolute',
     width: '100%',
     alignItems: 'center',
@@ -34,15 +47,21 @@ const styles = StyleSheet.create({
     width: '90%',
   },
   searchBar: {
+    flex: 1,
+    flexDirection: 'row',
+
+    alignItems: 'center',
     width: '100%',
     backgroundColor: 'white',
     borderRadius: 5,
-    paddingLeft: 25,
+    paddingLeft: 15,
+    paddingTop: 2,
     color: TEXT_DEFAULT,
     textDecorationLine: 'none',
   },
   caption: {
-    padding: 15,
+    padding: 10,
+    color: TEXT_CAPTION,
   },
 });
 export default SearchButton;
