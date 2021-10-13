@@ -26,10 +26,10 @@ const styles = StyleSheet.create({
   footer: {
     position: 'absolute',
     zIndex: 2,
-    top: hp('96.5%'),
     width: '100%',
+    bottom: hp('-3%'),
     height: hp('10%'),
-    borderRadius: 50,
+    borderRadius: 20,
     backgroundColor: UI_WHITE,
     alignItems: 'center',
   },

@@ -9,6 +9,7 @@ import {
 } from 'react-native-responsive-screen';
 import {TEXT_CAPTION, TEXT_TITLE} from '../utils/color';
 import Text from '../components/Text';
+import ToggleSwitchComponents from '../components/ToggleSwitch';
 
 interface IProps {}
 
@@ -34,6 +35,7 @@ const FacilityActivationScreen: React.FC<IProps> = () => {
       <Text weight={400} style={styles.caption}>
         현재 도움이될만한 다양한 시설들을 추가중이에요 !
       </Text>
+      <ToggleSwitchComponents />
     </View>
   );
 };

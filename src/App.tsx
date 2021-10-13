@@ -5,6 +5,7 @@ import {StatusBar} from 'react-native';
 import FacilityActivationScreen from './screens/FacilityActivationScreen';
 import MapScreen from './screens/MapScreen';
 import HomeScreen from './screens/HomeScreen';
+import LocationSearchScreen from './screens/LocationSearchScreen';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,10 @@ const App: React.FC = () => {
           <Stack.Screen
             name="Activation"
             component={FacilityActivationScreen}
+          />
+          <Stack.Screen
+            name="LocationSearch"
+            component={LocationSearchScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>

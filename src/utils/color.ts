@@ -7,3 +7,4 @@ export const TEXT_DISABLE = '#818995';
 
 export const UI_WHITE = '#FFFFFF';
 export const UI_LINE = '#EFEFEF';
+export const UI_DEFAULT = '#FF4848';
