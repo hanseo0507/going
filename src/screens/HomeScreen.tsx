@@ -1,6 +1,13 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
-import {StyleSheet, SafeAreaView, View} from 'react-native';
+import React, {useRef} from 'react';
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  GestureResponderEvent,
+  Animated,
+  Dimensions,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,11 +19,32 @@ import FooterButton from '../components/Footer';
 import FacilityComponents from '../components/Facility';
 import MapScreen from './MapScreen';
 import HardRoadComponents from '../components/HardRoad';
+import SearchButton from '../components/SearchButton';
 
 interface IProps {}
 
 const HomeScreen: React.FC<IProps> = () => {
-  const sheetRef: any = React.useRef<HTMLDivElement>(null); // 타입 재설정 필요
+  const sheetRef = useRef<BottomSheet | null>(null);
+  const sheetContainerValue = useRef<Animated.Value>(
+    new Animated.Value(0),
+  ).current;
+
+  const bottomSheeetAnimatedStart = (open: boolean) => {
+    Animated.timing(sheetContainerValue, {
+      toValue: open ? 0 : Dimensions.get('window').height,
+      duration: 150,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const onBottomSheetOpenStart = () => bottomSheeetAnimatedStart(true);
+
+  const onBottomSheetClonseEnd = () => bottomSheeetAnimatedStart(false);
+
+  const onClickBottomSheetContainer = (event: GestureResponderEvent) => {
+    bottomSheeetAnimatedStart(false);
+    sheetRef.current?.snapTo(2);
+  };
 
   const BottomSheetContent = (): React.ReactNode => {
     return (
@@ -37,11 +65,23 @@ const HomeScreen: React.FC<IProps> = () => {
   return (
     <SafeAreaView style={styles.container}>
       <MapScreen />
+      <SearchButton />
+
+      <Animated.View
+        style={[
+          styles.bottomSheetContainer,
+          {transform: [{translateY: sheetContainerValue}]},
+        ]}
+        onTouchEnd={onClickBottomSheetContainer}
+      />
+
       <BottomSheet
         ref={sheetRef}
         snapPoints={[hp('85%'), 300, 0]}
         borderRadius={10}
+        onOpenStart={onBottomSheetOpenStart}
         renderContent={BottomSheetContent}
+        onCloseEnd={onBottomSheetClonseEnd}
       />
       <FooterButton sheetRef={sheetRef} />
     </SafeAreaView>
@@ -53,6 +93,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: UI_WHITE,
     justifyContent: 'space-between',
+  },
+  bottomSheetContainer: {
+    zIndex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: wp('100%'),
+    height: hp('100%'),
+    backgroundColor: 'rgba(0,0,0,0.4)',
   },
   bottomSheet: {
     padding: hp('2.5%'),

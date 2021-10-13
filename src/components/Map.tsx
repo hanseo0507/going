@@ -38,7 +38,6 @@ const MapComponents: React.FC<MapComponentsProps> = ({
 }) => {
   return (
     <>
-      <SearchButton />
       <MapboxGL.MapView
         style={styles.map}
         styleURL="mapbox://styles/hanseo0507/ckubdhvht8c2z19qjr8jxvbx6"
