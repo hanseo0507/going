@@ -1,23 +1,15 @@
-/* eslint-disable quotes */
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {
-  Button,
-  StyleSheet,
-  TextInput,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import {StyleSheet, TouchableHighlight, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import SearchBar from '../components/SearchBar';
-import axios, {AxiosPromise, AxiosResponse} from 'axios';
 import {Icon} from 'react-native-eva-icons';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {TEXT_CAPTION, TEXT_DISABLE, TEXT_TITLE, UI_LINE} from '../utils/color';
+import {TEXT_CAPTION, TEXT_TITLE} from '../utils/color';
 import Text from '../components/Text';
+import ToggleSwitchComponents from '../components/ToggleSwitch';
 
 interface IProps {}
 
@@ -43,6 +35,7 @@ const FacilityActivationScreen: React.FC<IProps> = () => {
       <Text weight={400} style={styles.caption}>
         현재 도움이될만한 다양한 시설들을 추가중이에요 !
       </Text>
+      <ToggleSwitchComponents />
     </View>
   );
 };

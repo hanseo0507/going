@@ -22,13 +22,11 @@ const MapScreen: React.FC = () => {
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
       );
     }
-
     async function requestPermissions() {
       if (Platform.OS === 'ios') {
         Geolocation.requestAuthorization('always');
         getLocation();
       }
-
       if (Platform.OS === 'android') {
         await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -36,7 +34,6 @@ const MapScreen: React.FC = () => {
         getLocation();
       }
     }
-
     requestPermissions();
   }, []);
 

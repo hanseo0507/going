@@ -2,8 +2,7 @@
 import {useNavigation} from '@react-navigation/core';
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {TEXT_DEFAULT, TEXT_DISABLE, TEXT_TITLE} from '../utils/color';
-import {UI_WHITE} from '../utils/color';
+import {TEXT_DEFAULT} from '../utils/color';
 
 const SearchButton: React.FC = () => {
   const navigation: any = useNavigation();
@@ -15,7 +14,7 @@ const SearchButton: React.FC = () => {
           activeOpacity={1}
           style={styles.searchBar}
           onPress={() => {
-            navigation.navigate('Activation');
+            navigation.navigate('LocationSearch');
           }}>
           <Text style={styles.caption}>장소 검색하기...</Text>
         </TouchableOpacity>
