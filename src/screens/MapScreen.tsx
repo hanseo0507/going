@@ -3,17 +3,30 @@ import React, {useEffect, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import {PermissionsAndroid, Platform} from 'react-native';
 import MapComponents from '../components/Map';
-import MapboxGL, {RegionPayload} from '@react-native-mapbox-gl/maps';
+import MapboxGL, {
+  OnPressEvent,
+  RegionPayload,
+} from '@react-native-mapbox-gl/maps';
 
 import axios from 'axios';
 import {IFacility} from '../types/facility';
+import FacilityInfoScreen from './FacilityInfoScreen';
 
-const MapScreen: React.FC = () => {
+export interface MapScreenProps {
+  followUserLocation: boolean;
+}
+
+const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
   const [coords, setCoords] = useState<number[]>([0, 0]);
   const [heading, setHeading] = useState<number>(0);
   const [zoomLevel, setZoomLevel] = useState<number>(0);
   const [isGranted, setIsGranted] = useState<boolean>(false);
   const [facilities, setFacilities] = useState<IFacility[]>([]);
+
+  const [selectedFacility, setSelectedFacility] = useState<IFacility | null>(
+    null,
+  );
+  const [oldFacility, setOldFacility] = useState<IFacility | null>(null);
 
   const onUpdate = async (location: MapboxGL.Location) => {
     const {longitude, latitude} = location.coords;
@@ -42,6 +55,15 @@ const MapScreen: React.FC = () => {
     setFacilities(data);
   };
 
+  const onPressMarker = (event: OnPressEvent) => {
+    setSelectedFacility(event.features[0].properties as IFacility);
+  };
+
+  const onPressMap = () => {
+    setOldFacility(selectedFacility);
+    setSelectedFacility(null);
+  };
+
   useEffect(() => {
     async function getLocation() {
       Geolocation.getCurrentPosition(
@@ -53,7 +75,6 @@ const MapScreen: React.FC = () => {
           setIsGranted(true);
         },
         error => {
-          console.log('error', error.code, error.message);
           console.error('error', error.code, error.message);
         },
         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
@@ -93,14 +114,24 @@ const MapScreen: React.FC = () => {
   return (
     <>
       {isGranted && (
-        <MapComponents
-          initializeCoords={coords}
-          heading={heading}
-          onUpdate={onUpdate}
-          onRegionDidChange={onRegionDidChange}
-          facilities={facilities}
-          zoomLevel={zoomLevel}
-        />
+        <>
+          <MapComponents
+            initializeCoords={coords}
+            heading={heading}
+            followUserLocation={followUserLocation}
+            onUpdate={onUpdate}
+            onRegionDidChange={onRegionDidChange}
+            onPressMarker={onPressMarker}
+            onPressMap={onPressMap}
+            facilities={facilities}
+            zoomLevel={zoomLevel}
+          />
+
+          <FacilityInfoScreen
+            facility={selectedFacility}
+            oldFacility={oldFacility}
+          />
+        </>
       )}
     </>
   );
