@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
     width: '100%',
     bottom: hp('-3%'),
-    height: hp('10%'),
+    height: hp('6%'),
     borderRadius: 20,
     backgroundColor: UI_WHITE,
     alignItems: 'center',

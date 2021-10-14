@@ -1,8 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import MapboxGL, {RegionPayload} from '@react-native-mapbox-gl/maps';
-import SearchButton from './SearchButton';
+import MapboxGL, {
+  OnPressEvent,
+  RegionPayload,
+} from '@react-native-mapbox-gl/maps';
 
 import {IFacility} from '../types/facility';
 import LocationMarker from './LocationMarker';
@@ -13,7 +15,7 @@ MapboxGL.setAccessToken('pk.eyJ1IjoiaGFuc2VvMDUwNyIsImEiOiJja3ViY25oY2wwcDlmMm5t
 const styles = StyleSheet.create({
   map: {
     flex: 1,
-    zIndex: 0,
+    zIndex: 1,
   },
 });
 
@@ -25,6 +27,8 @@ interface MapComponentsProps {
   onRegionDidChange?: (
     feature: GeoJSON.Feature<GeoJSON.Point, RegionPayload>,
   ) => void;
+  onPressMarker: (event: OnPressEvent) => void;
+  onPressMap: () => void;
 
   facilities: IFacility[];
 }
@@ -34,6 +38,8 @@ const MapComponents: React.FC<MapComponentsProps> = ({
   heading,
   onUpdate,
   onRegionDidChange,
+  onPressMarker,
+  onPressMap,
   facilities,
 }) => {
   return (
@@ -45,7 +51,8 @@ const MapComponents: React.FC<MapComponentsProps> = ({
         logoEnabled={false}
         attributionEnabled={false}
         localizeLabels={true}
-        onRegionDidChange={onRegionDidChange}>
+        onRegionIsChanging={onRegionDidChange}
+        onPress={onPressMap}>
         <MapboxGL.Camera
           centerCoordinate={initializeCoords}
           zoomLevel={17}
@@ -67,16 +74,30 @@ const MapComponents: React.FC<MapComponentsProps> = ({
             }}
           />
         </MapboxGL.UserLocation>
-        {facilities.map((v, i) => {
-          return (
-            <MapboxGL.PointAnnotation
-              key={i}
-              id="mapbox_facility_position"
-              coordinate={v.location.coordinates}>
-              <LocationMarker />
-            </MapboxGL.PointAnnotation>
-          );
-        })}
+        <MapboxGL.ShapeSource
+          id="test"
+          shape={{
+            type: 'FeatureCollection',
+            features: facilities.map(v => ({
+              type: 'Feature',
+              geometry: {type: 'Point', coordinates: v.location.coordinates},
+              id: v._id,
+              properties: v,
+            })),
+          }}
+          onPress={onPressMarker}>
+          <MapboxGL.SymbolLayer
+            id="pointCount"
+            style={{
+              iconImage: 'https://i.imgur.com/K5mevsr.png',
+              iconSize: 0.04,
+              iconRotate: heading,
+              iconRotationAlignment: 'map',
+              iconAllowOverlap: true,
+            }}>
+            <LocationMarker />
+          </MapboxGL.SymbolLayer>
+        </MapboxGL.ShapeSource>
       </MapboxGL.MapView>
     </>
   );
