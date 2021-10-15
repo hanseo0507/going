@@ -52,7 +52,10 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
     );
     setFacilities(data);
   };
+<<<<<<< HEAD
+=======
 
+>>>>>>> 2fdcd04917d76ab0f3bd00f64f5478f09a93b2e0
   const onPressMarker = (event: OnPressEvent) => {
     setSelectedFacility(event.features[0].properties as IFacility);
   };
@@ -119,7 +122,6 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
             facilities={facilities}
             zoomLevel={zoomLevel}
           />
-
           <FacilityInfoScreen
             facility={selectedFacility}
             oldFacility={oldFacility}
