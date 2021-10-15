@@ -29,7 +29,6 @@ interface MapComponentsProps {
   ) => void;
   onPressMarker: (event: OnPressEvent) => void;
   onPressMap: () => void;
-
   facilities: IFacility[];
 }
 

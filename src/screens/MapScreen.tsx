@@ -35,7 +35,6 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
     }
     setHeading(location.coords.heading || 0);
   };
-
   const onRegionDidChange = async (
     location: GeoJSON.Feature<GeoJSON.Point, RegionPayload>,
   ) => {
@@ -51,7 +50,6 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
         },
       },
     );
-
     setFacilities(data);
   };
 
@@ -69,7 +67,6 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
       Geolocation.getCurrentPosition(
         position => {
           const {latitude, longitude} = position.coords;
-
           setCoords([longitude, latitude]);
           setHeading(position.coords.heading || 0);
           setIsGranted(true);
@@ -95,7 +92,6 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
     }
     requestPermissions();
   }, []);
-
   useEffect(() => {
     const getFacilities = async () => {
       const {data} = await axios.get<IFacility[]>(
@@ -104,13 +100,10 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
           params: {lng: coords[0], lat: coords[1], distance: 4000, limit: 50},
         },
       );
-
       setFacilities(data);
     };
-
     getFacilities();
   }, [coords]);
-
   return (
     <>
       {isGranted && (
@@ -136,5 +129,4 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
     </>
   );
 };
-
 export default MapScreen;

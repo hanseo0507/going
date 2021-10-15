@@ -38,9 +38,7 @@ const HomeScreen: React.FC<IProps> = () => {
   };
 
   const onBottomSheetOpenStart = () => bottomSheeetAnimatedStart(true);
-
   const onBottomSheetClonseEnd = () => bottomSheeetAnimatedStart(false);
-
   const onClickBottomSheetContainer = (event: GestureResponderEvent) => {
     bottomSheeetAnimatedStart(false);
     sheetRef.current?.snapTo(2);
