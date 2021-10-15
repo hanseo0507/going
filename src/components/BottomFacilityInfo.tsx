@@ -1,12 +1,10 @@
 import React from 'react';
 import {View, ViewProps} from 'react-native';
 import styled from 'styled-components/native';
-
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
 import Button from './Button';
 import Text from './Text';
 import MarkerBlue from '../assets/Marker_Blue.svg';
@@ -14,7 +12,6 @@ import {TEXT_CAPTION, TEXT_DEFAULT} from '../utils/color';
 
 const SyltedView = styled.View`
   width: ${wp('100%')};
-
   z-index: 3;
   padding: 25px;
   padding-bottom: 15px;
@@ -66,7 +63,6 @@ export interface BottomFacilityInfoProps extends ViewProps {
   title: string;
   type: string;
   location: string;
-
   description?: string;
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Switch} from 'react-native-gesture-handler';
 import {
   widthPercentageToDP as wp,
@@ -13,22 +13,42 @@ import {
   TEXT_DISABLE,
   UI_WHITE,
 } from '../utils/color';
+import styled from 'styled-components/native';
 
 interface IProps {}
+
+const SyltedView = styled.View`
+  top: ${hp('-6%')};
+  flex: 1;
+  align-items: flex-start;
+  background-color: ${UI_WHITE};
+`;
+
+const ViewWrapper = styled.View`
+  margin-left: ${wp('4%')};
+  margin-right: ${wp('4%')};
+`;
+
+const TextTilte = styled(Text)`
+  padding-top: 10px;
+  font-size: ${wp('5%')};
+`;
+
+const TextCaption = styled(Text)`
+  font-size: ${wp('3.5%')};
+  margin-top: ${hp('-2.5%')};
+  color: ${TEXT_CAPTION};
+`;
 
 const HardRoadComponents: React.FC<IProps> = () => {
   const [isSwitchOn, setIsSwitchOn] = React.useState<boolean>(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
   return (
-    <View style={[styles.container, styles.elevation]}>
-      <View style={styles.textLayer}>
-        <Text style={styles.title} weight={500}>
-          가기힘든 길
-        </Text>
-        <Text style={styles.caption} weight={400}>
-          가기힘든 길을 표시하실래요 ?
-        </Text>
+    <SyltedView style={styles.elevation}>
+      <ViewWrapper>
+        <TextTilte weight={600}>가기힘든 길</TextTilte>
+        <TextCaption weight={400}>가기힘든 길을 표시하실래요 ?</TextCaption>
         <Text>{isSwitchOn ? 'Switch is ON' : 'Switch is OFF'}</Text>
         <Switch
           style={styles.switch}
@@ -37,36 +57,16 @@ const HardRoadComponents: React.FC<IProps> = () => {
           value={isSwitchOn}
           onValueChange={onToggleSwitch}
         />
-      </View>
-    </View>
+      </ViewWrapper>
+    </SyltedView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    top: hp('-6%'),
-    flex: 1,
-    alignItems: 'flex-start',
-    backgroundColor: UI_WHITE,
-  },
   elevation: {
     elevation: 10,
     shadowColor: '#B8B8B8',
     borderRadius: 15,
-  },
-  textLayer: {
-    marginLeft: wp('4%'),
-    marginRight: wp('4%'),
-  },
-  title: {
-    paddingTop: 10,
-    fontSize: wp('5%'),
-    fontWeight: '600',
-  },
-  caption: {
-    fontSize: wp('3.5%'),
-    marginTop: hp('-2.5%'),
-    color: TEXT_CAPTION,
   },
   switch: {
     flex: 1,
