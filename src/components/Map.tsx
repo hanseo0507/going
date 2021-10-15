@@ -29,7 +29,6 @@ interface MapComponentsProps {
   ) => void;
   onPressMarker: (event: OnPressEvent) => void;
   onPressMap: () => void;
-
   facilities: IFacility[];
 }
 
@@ -53,14 +52,7 @@ const MapComponents: React.FC<MapComponentsProps> = ({
         localizeLabels={true}
         onRegionIsChanging={onRegionDidChange}
         onPress={onPressMap}>
-        <MapboxGL.Camera
-          centerCoordinate={initializeCoords}
-          zoomLevel={17}
-          maxBounds={{
-            ne: [124, 38],
-            sw: [132, 33],
-          }}
-        />
+        <MapboxGL.Camera centerCoordinate={initializeCoords} zoomLevel={17} />
         <MapboxGL.UserLocation showsUserHeadingIndicator onUpdate={onUpdate}>
           <MapboxGL.SymbolLayer
             id="mapbox_user_position"

@@ -62,9 +62,8 @@ const HomeScreen: React.FC<IProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <MapScreen />
+      <MapScreen followUserLocation={false} />
       <SearchButton />
-
       <Animated.View
         style={[
           styles.bottomSheetContainer,
@@ -72,7 +71,6 @@ const HomeScreen: React.FC<IProps> = () => {
         ]}
         onTouchEnd={onClickBottomSheetContainer}
       />
-
       <BottomSheet
         ref={sheetRef}
         snapPoints={[hp('85%'), 300, 0]}
