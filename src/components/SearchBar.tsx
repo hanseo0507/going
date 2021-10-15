@@ -1,74 +1,83 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useState} from 'react';
 import {
+  Keyboard,
   StyleSheet,
   TextInput,
   TextInputProps,
-  TouchableHighlight,
   View,
 } from 'react-native';
 import {Icon} from 'react-native-eva-icons';
-import {TEXT_CAPTION, TEXT_DEFAULT, TEXT_DISABLE} from '../utils/color';
+
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import {TEXT_CAPTION, TEXT_DEFAULT, TEXT_DISABLE} from '../utils/color';
 
-interface IProps extends TextInputProps {}
-
-const SearchBar: React.FC<IProps> = () => {
+const SearchBar: React.FC<TextInputProps> = props => {
+  const [isFocus, setIsFocus] = useState<boolean>(false);
   const navigation: any = useNavigation();
 
+  const onFocus = () => setIsFocus(true);
+  const onBlur = () => setIsFocus(false);
+
+  const onPress = (goBack?: boolean) => {
+    goBack && navigation.goBack();
+    Keyboard.dismiss();
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.textInput}>
-        <TouchableHighlight
+    <View style={styles.textInput}>
+      <Icon
+        name="arrow-ios-back-outline"
+        width={wp('6%')}
+        height={hp('6%')}
+        fill={TEXT_CAPTION}
+        style={styles.icon}
+        onPress={() => onPress(true)}
+      />
+      <TextInput
+        placeholder="장소 검색하기..."
+        placeholderTextColor={TEXT_DISABLE}
+        style={styles.searchBar}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        {...props}
+      />
+      {isFocus && (
+        <Icon
+          name="close-outline"
+          width={wp('6%')}
+          height={hp('6%')}
+          fill={TEXT_CAPTION}
           style={styles.icon}
-          underlayColor={'#C4C4C4'}
-          onPress={() => navigation.goBack()}>
-          <Icon
-            name="arrow-back-outline"
-            width={wp('8%')}
-            height={hp('8%')}
-            fill={TEXT_CAPTION}
-          />
-        </TouchableHighlight>
-        <TextInput
-          placeholder="장소 검색하기..."
-          placeholderTextColor={TEXT_DISABLE}
-          style={styles.searchBar}
+          onPress={() => onPress(false)}
         />
-      </View>
+      )}
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    top: 50,
-    position: 'absolute',
-    width: '100%',
-    alignItems: 'center',
-    zIndex: 1,
-  },
   textInput: {
     width: '90%',
-  },
-  searchBar: {
-    width: '100%',
     backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
     borderRadius: 5,
-    paddingLeft: 25,
+    paddingLeft: 18,
+    paddingRight: 20,
+    elevation: 2,
+  },
+
+  searchBar: {
+    flex: 1,
     color: TEXT_DEFAULT,
     textDecorationLine: 'none',
   },
   icon: {
-    marginTop: hp('5%'),
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: wp('8%'),
-    height: hp('4%'),
-    borderRadius: 30,
+    marginRight: wp('0.4%'),
   },
 });
 export default SearchBar;
