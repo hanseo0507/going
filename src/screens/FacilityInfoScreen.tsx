@@ -13,6 +13,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import LineLayerComponents from '../components/LineLayer';
 
 const ScreenContainer = styled.View`
   position: absolute;
@@ -27,6 +28,7 @@ export interface FacilityInfoScreenProps {
   facility: IFacility | null;
   oldFacility: IFacility | null;
 
+  onPressFindRoad: () => void;
   onTouchEnd: (event: any) => void;
   followUserLocation: boolean;
 }
@@ -35,6 +37,7 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
   facility,
   oldFacility,
   onTouchEnd,
+  onPressFindRoad,
   followUserLocation,
 }) => {
   const infoYValue = useRef<Animated.Value>(
@@ -95,6 +98,7 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
                 ? oldFacility.description
                 : ''
             }
+            onPress={onPressFindRoad}
           />
         )}
       </Animated.View>

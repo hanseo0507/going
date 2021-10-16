@@ -51,6 +51,9 @@ interface MapComponentsProps {
 
   followUserMode: MapboxGL.UserTrackingModes;
   followUserLocation: boolean;
+
+  isFinding: boolean;
+  userLocation: number[];
 }
 
 const MapComponents: React.FC<MapComponentsProps> = ({
@@ -64,6 +67,9 @@ const MapComponents: React.FC<MapComponentsProps> = ({
   facilities,
   selectedFacility,
   cameraRef,
+
+  isFinding,
+  userLocation,
 }) => {
   return (
     <>
@@ -98,8 +104,13 @@ const MapComponents: React.FC<MapComponentsProps> = ({
               iconAllowOverlap: true,
             }}
           />
-          <LineLayerComponents centerCoordinate={centerCoordinate} />
         </MapboxGL.UserLocation>
+        {isFinding && selectedFacility && (
+          <LineLayerComponents
+            userLocation={userLocation}
+            targetLocation={selectedFacility.location.coordinates}
+          />
+        )}
         <MapboxGL.ShapeSource
           id="test"
           shape={{

@@ -34,6 +34,7 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
     null,
   );
   const [oldFacility, setOldFacility] = useState<IFacility | null>(null);
+  const [isFinding, setIsFinding] = useState<boolean>(false);
 
   const getLocation = (): Promise<{coords: number[]; heading: number}> => {
     return new Promise((resolve, reject) => {
@@ -80,7 +81,15 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
   };
 
   const onPressMarker = (event: OnPressEvent) => {
-    setSelectedFacility(event.features[0].properties as IFacility);
+    const current = event.features[0].properties as IFacility;
+
+    cameraRef.current?.setCamera({
+      centerCoordinate: current.location.coordinates,
+      zoomLevel: 16,
+      animationDuration: 2000,
+    });
+
+    setSelectedFacility(current);
   };
 
   const onPressMap = () => {
@@ -98,6 +107,10 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
     } else {
       setFollowUserMode(MapboxGL.UserTrackingModes.FollowWithHeading);
     }
+  };
+
+  const onPressFindRoad = () => {
+    setIsFinding(true);
   };
 
   useEffect(() => {
@@ -143,8 +156,11 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
   useEffect(() => {
     if (facility && facility instanceof Object) {
       setSelectedFacility(facility);
-      cameraRef.current?.moveTo(facility.location.coordinates, 1000);
-      cameraRef.current?.zoomTo(15);
+      cameraRef.current?.setCamera({
+        centerCoordinate: facility.location.coordinates,
+        zoomLevel: 16,
+        animationDuration: 2000,
+      });
       //setCoords(facility.location.coordinates);
       //setZoomLevel(15);
     }
@@ -167,6 +183,8 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
             cameraRef={cameraRef}
             followUserMode={followUserMode}
             followUserLocation={followUserLocation}
+            isFinding={isFinding}
+            userLocation={coords}
           />
 
           <FacilityInfoScreen
@@ -174,6 +192,7 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
             oldFacility={oldFacility}
             followUserLocation={followUserLocation}
             onTouchEnd={onPressGPSButton}
+            onPressFindRoad={onPressFindRoad}
           />
         </>
       )}

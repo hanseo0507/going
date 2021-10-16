@@ -64,6 +64,7 @@ export interface BottomFacilityInfoProps extends ViewProps {
   type: string;
   location: string;
   description?: string;
+  onPress: () => void;
 }
 
 const BottomFacilityInfo: React.FC<BottomFacilityInfoProps> = ({
@@ -71,6 +72,7 @@ const BottomFacilityInfo: React.FC<BottomFacilityInfoProps> = ({
   type,
   location,
   description,
+  onPress,
   ...props
 }) => {
   return (
@@ -92,7 +94,7 @@ const BottomFacilityInfo: React.FC<BottomFacilityInfoProps> = ({
           <DescriptionText weight={400}>{description}</DescriptionText>
         )}
       </View>
-      <Button label="길찾기" onPress={() => {}} text={{weight: 700}} />
+      <Button label="길찾기" onPress={onPress} text={{weight: 700}} />
     </SyltedView>
   );
 };
