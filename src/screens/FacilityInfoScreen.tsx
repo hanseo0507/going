@@ -15,10 +15,10 @@ import {
 } from 'react-native-responsive-screen';
 import LineLayerComponents from '../components/LineLayer';
 
-const ScreenContainer = styled.View`
+const ScreenContainer = styled.View<{showInfo: boolean}>`
   position: absolute;
   bottom: 0;
-  z-index: 3;
+  z-index: ${props => (props.showInfo ? 4 : 3)};
   flex-direction: column;
 
   justify-content: flex-start;
@@ -60,7 +60,7 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
   }, [facility]);
 
   return (
-    <ScreenContainer>
+    <ScreenContainer showInfo={!hide && (facility || oldFacility)}>
       <View
         style={{
           width: wp('100%'),
