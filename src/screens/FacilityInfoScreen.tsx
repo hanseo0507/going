@@ -13,7 +13,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import LineLayerComponents from '../components/LineLayer';
+import Button from '../components/Button';
 
 const ScreenContainer = styled.View<{showInfo: boolean}>`
   position: absolute;
@@ -31,6 +31,9 @@ export interface FacilityInfoScreenProps {
   onPressFindRoad: () => void;
   onTouchEnd: (event: any) => void;
   followUserLocation: boolean;
+
+  isFinding: boolean;
+  onPressCancleFindDirection: () => void;
 }
 
 const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
@@ -38,38 +41,57 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
   oldFacility,
   onTouchEnd,
   onPressFindRoad,
+  onPressCancleFindDirection,
   followUserLocation,
+  isFinding,
 }) => {
   const infoYValue = useRef<Animated.Value>(
     new Animated.Value(Dimensions.get('window').height),
   ).current;
   const [hide, setHide] = useState(false);
 
-  useEffect(() => {
-    const animateStart = (open: boolean) => {
-      Animated.timing(infoYValue, {
-        toValue: open ? 0 : Dimensions.get('window').height,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-      open ? setHide(false) : setTimeout(() => setHide(true), 300);
-    };
+  const animateStart = (open: boolean) => {
+    Animated.timing(infoYValue, {
+      toValue: open ? 0 : Dimensions.get('window').height,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+    open ? setHide(false) : setTimeout(() => setHide(true), 300);
+  };
 
+  useEffect(() => {
     animateStart(Boolean(facility));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [facility]);
+
+  useEffect(() => {
+    animateStart(!isFinding);
+  }, [isFinding]);
 
   return (
     <ScreenContainer showInfo={!hide && (facility || oldFacility)}>
       <View
         style={{
           width: wp('100%'),
-          paddingHorizontal: wp('5%'),
+          flexDirection: 'column-reverse',
+          alignItems: 'flex-end',
+          padding: wp('5%'),
           paddingBottom:
             !hide && (facility || oldFacility) ? hp('2.5%') : hp('8%'),
-          flexDirection: 'row-reverse',
         }}>
-        <IconButton type="image" onTouchEnd={onTouchEnd}>
+        {isFinding && (
+          <Button
+            label="길찾기 취소"
+            onPress={onPressCancleFindDirection}
+            text={{weight: 700}}
+            width={wp('90%')}
+          />
+        )}
+
+        <IconButton
+          type="image"
+          onTouchEnd={onTouchEnd}
+          style={{marginBottom: isFinding ? hp('1.5%') : 0}}>
           {followUserLocation ? <GPSRedSVG /> : <GPSBlackSVG />}
         </IconButton>
       </View>

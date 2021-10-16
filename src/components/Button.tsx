@@ -1,18 +1,21 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, TextProps, TouchableOpacity} from 'react-native';
+import {StyleSheet, TextProps, TouchableOpacity, ViewProps} from 'react-native';
 import Text from './Text';
 import {UI_WHITE} from '../utils/color';
 
-interface IProps {
+interface IProps extends ViewProps {
   label: string;
   onPress: () => void;
   text: TextProps & {weight: number};
+  width?: string | number;
 }
 
 const Button: React.FC<IProps> = props => {
   return (
-    <TouchableOpacity style={styles.container} onPress={() => props.onPress()}>
+    <TouchableOpacity
+      style={[styles.container, {width: props.width}, props.style]}
+      {...props}>
       <Text style={styles.label} {...props.text}>
         {props.label}
       </Text>
