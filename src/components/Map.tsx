@@ -9,6 +9,7 @@ import MapboxGL, {
 
 import {IFacility} from '../types/facility';
 import LocationMarker from './LocationMarker';
+import LineLayerComponents from './LineLayer';
 
 // prettier-ignore
 MapboxGL.setAccessToken('pk.eyJ1IjoiaGFuc2VvMDUwNyIsImEiOiJja3ViY25oY2wwcDlmMm5tbzllMGkwNWI4In0.8gwFWP3KrrHWwfIRbRDWWw');
@@ -60,7 +61,6 @@ const MapComponents: React.FC<MapComponentsProps> = ({
   onPressMap,
   facilities,
   selectedFacility,
-
   cameraRef,
 }) => {
   return (
@@ -96,6 +96,7 @@ const MapComponents: React.FC<MapComponentsProps> = ({
               iconAllowOverlap: true,
             }}
           />
+          <LineLayerComponents centerCoordinate={centerCoordinate} />
         </MapboxGL.UserLocation>
         <MapboxGL.ShapeSource
           id="test"
