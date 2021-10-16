@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
   switchWrapper: {
     flexDirection: 'row',
   },
-
   title: {
     color: TEXT_TITLE,
     fontSize: 30,
