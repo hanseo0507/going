@@ -77,10 +77,7 @@ const HomeScreen: React.FC<IProps> = ({route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <MapScreen
-        followUserLocation={false}
-        facility={route.params ? route.params.facility : false}
-      />
+      <MapScreen facility={route.params ? route.params.facility : false} />
 
       <SearchButton />
 

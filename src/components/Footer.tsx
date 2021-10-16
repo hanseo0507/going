@@ -13,7 +13,7 @@ interface IProps {
 
 const StyledFooter = styled.TouchableOpacity`
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   width: 100%;
   bottom: ${hp('-3%')};
   height: ${hp('9%')};
