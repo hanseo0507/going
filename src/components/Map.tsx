@@ -8,7 +8,6 @@ import MapboxGL, {
 } from '@react-native-mapbox-gl/maps';
 
 import {IFacility} from '../types/facility';
-import LocationMarker from './LocationMarker';
 import LineLayerComponents from './LineLayer';
 
 // prettier-ignore
@@ -49,6 +48,9 @@ interface MapComponentsProps {
   selectedFacility: IFacility | null;
 
   cameraRef: React.LegacyRef<MapboxGL.Camera>;
+
+  followUserMode: MapboxGL.UserTrackingModes;
+  followUserLocation: boolean;
 }
 
 const MapComponents: React.FC<MapComponentsProps> = ({

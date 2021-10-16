@@ -13,27 +13,45 @@ import {IFacility} from '../types/facility';
 import FacilityInfoScreen from './FacilityInfoScreen';
 
 export interface MapScreenProps {
-  followUserLocation: boolean;
   facility: IFacility | boolean;
 }
 
-const MapScreen: React.FC<MapScreenProps> = ({
-  followUserLocation,
-  facility,
-}) => {
+const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
   const cameraRef = useRef<MapboxGL.Camera>(null);
 
   const [coords, setCoords] = useState<number[]>([0, 0]);
   const [coordsForUpdate, setCoordsForUpdate] = useState<number[]>([0, 0]);
   const [heading, setHeading] = useState<number>(0);
-  const [zoomLevel, setZoomLevel] = useState<number>(17);
+
   const [isGranted, setIsGranted] = useState<boolean>(false);
   const [facilities, setFacilities] = useState<IFacility[]>([]);
+  const [followUserMode, setFollowUserMode] =
+    useState<MapboxGL.UserTrackingModes>(MapboxGL.UserTrackingModes.Follow);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [followUserLocation, setFollowUserLocation] = useState<boolean>(true);
 
   const [selectedFacility, setSelectedFacility] = useState<IFacility | null>(
     null,
   );
   const [oldFacility, setOldFacility] = useState<IFacility | null>(null);
+
+  const getLocation = (): Promise<{coords: number[]; heading: number}> => {
+    return new Promise((resolve, reject) => {
+      Geolocation.getCurrentPosition(
+        position => {
+          const {latitude, longitude} = position.coords;
+          resolve({
+            coords: [longitude, latitude],
+            heading: position.coords.heading || 0,
+          });
+        },
+        error => {
+          reject(error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    });
+  };
 
   const onUpdate = async (location: MapboxGL.Location) => {
     const {longitude, latitude} = location.coords;
@@ -62,7 +80,6 @@ const MapScreen: React.FC<MapScreenProps> = ({
   };
 
   const onPressMarker = (event: OnPressEvent) => {
-    console.log(event.features[0].properties);
     setSelectedFacility(event.features[0].properties as IFacility);
   };
 
@@ -71,34 +88,36 @@ const MapScreen: React.FC<MapScreenProps> = ({
     setSelectedFacility(null);
   };
 
-  useEffect(() => {
-    async function getLocation() {
-      Geolocation.getCurrentPosition(
-        position => {
-          const {latitude, longitude} = position.coords;
-          setCoords([longitude, latitude]);
-          setCoordsForUpdate([longitude, latitude]);
-          setHeading(position.coords.heading || 0);
-          setIsGranted(true);
-        },
-        error => {
-          console.error('error', error.code, error.message);
-        },
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-      );
+  const onPressGPSButton = async () => {
+    const location = await getLocation();
+    cameraRef.current?.flyTo(location.coords, 1000);
+    setTimeout(() => cameraRef.current?.zoomTo(16), 900);
+
+    if (!followUserLocation) {
+      setFollowUserMode(MapboxGL.UserTrackingModes.Follow);
+    } else {
+      setFollowUserMode(MapboxGL.UserTrackingModes.FollowWithHeading);
     }
+  };
+
+  useEffect(() => {
     async function requestPermissions() {
       if (Platform.OS === 'ios') {
         Geolocation.requestAuthorization('always');
         await Geolocation.requestAuthorization('always');
-        getLocation();
       }
       if (Platform.OS === 'android') {
         await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         );
-        getLocation();
       }
+
+      const location = await getLocation();
+
+      setCoords(location.coords);
+      setCoordsForUpdate(location.coords);
+      setHeading(location.heading);
+      setIsGranted(true);
     }
     requestPermissions();
   }, []);
@@ -138,20 +157,23 @@ const MapScreen: React.FC<MapScreenProps> = ({
           <MapComponents
             centerCoordinate={coords}
             heading={heading}
-            //followUserLocation={followUserLocation}
             onUpdate={onUpdate}
             onRegionDidChange={onRegionDidChange}
             onPressMarker={onPressMarker}
             onPressMap={onPressMap}
             facilities={facilities}
             selectedFacility={selectedFacility}
-            zoomLevel={zoomLevel}
+            zoomLevel={16}
             cameraRef={cameraRef}
+            followUserMode={followUserMode}
+            followUserLocation={followUserLocation}
           />
 
           <FacilityInfoScreen
             facility={selectedFacility}
             oldFacility={oldFacility}
+            followUserLocation={followUserLocation}
+            onTouchEnd={onPressGPSButton}
           />
         </>
       )}

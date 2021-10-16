@@ -1,25 +1,41 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, Dimensions} from 'react-native';
+import {Animated, Dimensions, View} from 'react-native';
 import styled from 'styled-components/native';
 
 import BottomFacilityInfo from '../components/BottomFacilityInfo';
 import {IFacility} from '../types/facility';
+
+import IconButton from '../components/IconButton';
+import GPSRedSVG from '../assets/GPS_Red.svg';
+import GPSBlackSVG from '../assets/GPS_Black.svg';
+
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const ScreenContainer = styled.View`
   position: absolute;
   bottom: 0;
   z-index: 3;
   flex-direction: column;
+
+  justify-content: flex-start;
 `;
 
 export interface FacilityInfoScreenProps {
   facility: IFacility | null;
   oldFacility: IFacility | null;
+
+  onTouchEnd: (event: any) => void;
+  followUserLocation: boolean;
 }
 
 const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
   facility,
   oldFacility,
+  onTouchEnd,
+  followUserLocation,
 }) => {
   const infoYValue = useRef<Animated.Value>(
     new Animated.Value(Dimensions.get('window').height),
@@ -42,6 +58,19 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
 
   return (
     <ScreenContainer>
+      <View
+        style={{
+          width: wp('100%'),
+          paddingHorizontal: wp('5%'),
+          paddingBottom:
+            !hide && (facility || oldFacility) ? hp('2.5%') : hp('8%'),
+          flexDirection: 'row-reverse',
+        }}>
+        <IconButton type="image" onTouchEnd={onTouchEnd}>
+          {followUserLocation ? <GPSRedSVG /> : <GPSBlackSVG />}
+        </IconButton>
+      </View>
+
       <Animated.View
         style={{
           transform: [{translateY: infoYValue}],
