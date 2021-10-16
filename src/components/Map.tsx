@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import MapboxGL, {
   OnPressEvent,
@@ -71,6 +71,7 @@ const MapComponents: React.FC<MapComponentsProps> = ({
   isFinding,
   userLocation,
 }) => {
+  const [state, setstate] = useState(false);
   return (
     <>
       <MapboxGL.MapView

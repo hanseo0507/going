@@ -110,7 +110,7 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
   };
 
   const onPressFindRoad = () => {
-    setIsFinding(true);
+    setIsFinding(!isFinding);
   };
 
   useEffect(() => {

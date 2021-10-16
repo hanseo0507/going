@@ -32,7 +32,7 @@ const LineLayerComponents: React.FC<LineLayerComponentProps> = ({
     };
 
     getDirection();
-  }, []);
+  }, [targetLocation, userLocation]);
 
   return coords.length > 0 ? (
     <MapboxGL.ShapeSource
@@ -52,6 +52,7 @@ const LineLayerComponents: React.FC<LineLayerComponentProps> = ({
       }}>
       <MapboxGL.LineLayer
         id={'LineLayer'}
+        // eslint-disable-next-line react-native/no-inline-styles
         style={{
           lineColor: '#FC3E3E',
           lineWidth: 4,
