@@ -16,7 +16,7 @@ const StyledFooter = styled.TouchableOpacity`
   z-index: 2;
   width: 100%;
   bottom: ${hp('-3%')};
-  height: ${hp('6%')};
+  height: ${hp('9%')};
   border-radius: 20px;
   background-color: ${UI_WHITE};
   align-items: center;

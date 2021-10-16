@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
 
   notFoundContainer: {
     flex: 1,
+    bottom: hp('5%'),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
   notFoundText: {
     fontSize: 18,
     letterSpacing: -1,
+    marginBottom: 5,
     color: TEXT_DEFAULT,
   },
 
