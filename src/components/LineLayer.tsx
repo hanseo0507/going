@@ -1,46 +1,67 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import axios from 'axios';
 
 interface LineLayerComponentProps {
   // onUpdate?: (location: MapboxGL.Location) => void;
-  centerCoordinate: number[];
+  userLocation: number[];
+  targetLocation: number[];
 }
 
-const LineLayerComponents: React.FC<LineLayerComponentProps> =
-  centerCoordinate => {
-    // function direction() {
-    //   axios(
-    //     `https://api.mapbox.com/directions/v5/mapbox/walking/${},${location.latitude};${lastDes.longitude},${lastDes.latitude}?geometries=geojson&access_token=${mapboxKey}`,
-    //   );
-    // }
-    const listStreet = [
-      [124, 38],
-      [132, 33],
-    ];
-    // useEffect(() => {
-    //   console.log(initializeCoords);
-    // });
-    return (
-      <MapboxGL.ShapeSource
-        id="routeSource"
-        shape={{
-          type: 'Feature',
-          properties: {
-            icon: 'exampleIcon',
+const LineLayerComponents: React.FC<LineLayerComponentProps> = ({
+  userLocation,
+  targetLocation,
+}) => {
+  const [coords, setCoords] = useState<number[][]>([]);
+
+  useEffect(() => {
+    const getDirection = async () => {
+      const {data}: any = await axios.get(
+        `https://api.mapbox.com/directions/v5/mapbox/walking/${userLocation[0]},${userLocation[1]};${targetLocation[0]},${targetLocation[1]}`,
+        {
+          params: {
+            geometries: 'geojson',
+            access_token:
+              'pk.eyJ1IjoiaGFuc2VvMDUwNyIsImEiOiJja3ViY25oY2wwcDlmMm5tbzllMGkwNWI4In0.8gwFWP3KrrHWwfIRbRDWWw',
           },
-          geometry: {
-            type: 'LineString',
-            coordinates: listStreet,
+        },
+      );
+
+      setCoords(data.routes[0].geometry.coordinates);
+    };
+
+    getDirection();
+  }, []);
+
+  return coords.length > 0 ? (
+    <MapboxGL.ShapeSource
+      id="routeSource"
+      shape={{
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'LineString',
+              coordinates: coords,
+            },
           },
-        }}>
-        <MapboxGL.LineLayer
-          id={'LineLayer'}
-          style={{lineColor: '#FC3E3E', lineWidth: 1}}
-        />
-      </MapboxGL.ShapeSource>
-    );
-  };
+        ],
+      }}>
+      <MapboxGL.LineLayer
+        id={'LineLayer'}
+        style={{
+          lineColor: '#FC3E3E',
+          lineWidth: 4,
+          lineCap: 'round',
+        }}
+      />
+    </MapboxGL.ShapeSource>
+  ) : (
+    <></>
+  );
+};
 
 export default LineLayerComponents;
