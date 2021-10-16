@@ -18,7 +18,7 @@ import LineLayerComponents from '../components/LineLayer';
 const ScreenContainer = styled.View`
   position: absolute;
   bottom: 0;
-  z-index: 3;
+  z-index: 4;
   flex-direction: column;
 
   justify-content: flex-start;
