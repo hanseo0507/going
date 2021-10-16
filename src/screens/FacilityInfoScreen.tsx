@@ -92,7 +92,7 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
           type="image"
           onTouchEnd={onTouchEnd}
           style={{marginBottom: isFinding ? hp('1.5%') : 0}}>
-          {followUserLocation ? <GPSRedSVG /> : <GPSBlackSVG />}
+          <GPSBlackSVG />
         </IconButton>
       </View>
 
