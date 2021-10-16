@@ -49,6 +49,16 @@ const FacilityActivationScreen: React.FC<IProps> = () => {
             onTouchEnd={() => setActive(!active)}
             margin
           />
+          <IconSwitch
+            isActivate={active}
+            onTouchEnd={() => setActive(!active)}
+            margin
+          />
+          <IconSwitch
+            isActivate={active}
+            onTouchEnd={() => setActive(!active)}
+            margin
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -71,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: UI_WHITE,
   },
   headerWrapper: {
-    borderBottomWidth: 2,
+    borderBottomWidth: 1,
     borderColor: UI_LINE,
   },
   switchContainer: {
