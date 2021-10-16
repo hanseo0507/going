@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingLeft: 18,
     paddingRight: 20,
-    elevation: 2,
+    elevation: 12,
+    shadowColor: '#DDDDDD',
   },
 
   searchBar: {

@@ -15,15 +15,13 @@ const styles = StyleSheet.create({
   contaienr: {
     borderRadius: wp('3%'),
     width: wp('28%'),
-    height: hp('17%'),
-
+    height: hp('13%'),
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-
     backgroundColor: UI_CONTAINER,
+    shadowColor: '#B4B4B4',
   },
-
   text: {
     color: TEXT_DEFAULT,
     fontSize: 12,

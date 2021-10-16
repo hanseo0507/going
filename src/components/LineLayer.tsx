@@ -55,7 +55,7 @@ const LineLayerComponents: React.FC<LineLayerComponentProps> = ({
         // eslint-disable-next-line react-native/no-inline-styles
         style={{
           lineColor: '#FC3E3E',
-          lineWidth: 4,
+          lineWidth: 3,
           lineCap: 'round',
         }}
       />
