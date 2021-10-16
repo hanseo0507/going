@@ -113,7 +113,7 @@ const MapComponents: React.FC<MapComponentsProps> = ({
             id="pointCount_Active"
             style={{
               iconImage: 'https://i.imgur.com/K5mevsr.png',
-              iconSize: 0.04,
+              iconSize: 0.055,
               iconRotationAlignment: 'map',
             }}
             filter={['==', 'isSelected', true]}
