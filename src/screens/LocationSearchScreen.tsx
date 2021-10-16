@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, View} from 'react-native';
+import {Keyboard, SafeAreaView, StyleSheet, View} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -13,6 +13,7 @@ import SearchBar from '../components/SearchBar';
 import {IFacility} from '../types/facility';
 import {TEXT_CAPTION, TEXT_DEFAULT, UI_LINE, UI_WHITE} from '../utils/color';
 import axios from 'axios';
+import {useNavigation} from '@react-navigation/core';
 
 const styles = StyleSheet.create({
   container: {
@@ -74,6 +75,7 @@ const styles = StyleSheet.create({
 interface IProps {}
 
 const LocationSearchScreen: React.FC<IProps> = () => {
+  const navigation = useNavigation();
   const [text, setText] = useState<string>('');
   const [searchResult, setSearchResult] = useState<
     (IFacility & {isKilometer: boolean; distance: string})[]
@@ -166,6 +168,13 @@ const LocationSearchScreen: React.FC<IProps> = () => {
     }
   };
 
+  const onClickResult = (
+    facility: IFacility & {isKilometer: boolean; distance: string},
+  ) => {
+    Keyboard.dismiss();
+    navigation.navigate('Home' as never, {facility} as never);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.searchBarContainer}>
@@ -188,7 +197,10 @@ const LocationSearchScreen: React.FC<IProps> = () => {
         <View>
           {searchResult.map((v, i) => {
             return (
-              <View key={i} style={styles.textContainer}>
+              <View
+                key={i}
+                style={styles.textContainer}
+                onTouchEnd={() => onClickResult(v)}>
                 <Text weight={500} style={styles.textTitle}>
                   {v.name}
                 </Text>

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
 import {PermissionsAndroid, Platform} from 'react-native';
 import MapComponents from '../components/Map';
@@ -14,12 +14,19 @@ import FacilityInfoScreen from './FacilityInfoScreen';
 
 export interface MapScreenProps {
   followUserLocation: boolean;
+  facility: IFacility | boolean;
 }
 
-const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
+const MapScreen: React.FC<MapScreenProps> = ({
+  followUserLocation,
+  facility,
+}) => {
+  const cameraRef = useRef<MapboxGL.Camera>(null);
+
   const [coords, setCoords] = useState<number[]>([0, 0]);
+  const [coordsForUpdate, setCoordsForUpdate] = useState<number[]>([0, 0]);
   const [heading, setHeading] = useState<number>(0);
-  const [zoomLevel, setZoomLevel] = useState<number>(0);
+  const [zoomLevel, setZoomLevel] = useState<number>(17);
   const [isGranted, setIsGranted] = useState<boolean>(false);
   const [facilities, setFacilities] = useState<IFacility[]>([]);
 
@@ -31,10 +38,11 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
   const onUpdate = async (location: MapboxGL.Location) => {
     const {longitude, latitude} = location.coords;
     if (coords[0] !== longitude && coords[1] !== latitude) {
-      setCoords([longitude, latitude]);
+      setCoordsForUpdate([longitude, latitude]);
     }
     setHeading(location.coords.heading || 0);
   };
+
   const onRegionDidChange = async (
     location: GeoJSON.Feature<GeoJSON.Point, RegionPayload>,
   ) => {
@@ -54,6 +62,7 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
   };
 
   const onPressMarker = (event: OnPressEvent) => {
+    console.log(event.features[0].properties);
     setSelectedFacility(event.features[0].properties as IFacility);
   };
 
@@ -68,6 +77,7 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
         position => {
           const {latitude, longitude} = position.coords;
           setCoords([longitude, latitude]);
+          setCoordsForUpdate([longitude, latitude]);
           setHeading(position.coords.heading || 0);
           setIsGranted(true);
         },
@@ -92,32 +102,51 @@ const MapScreen: React.FC<MapScreenProps> = ({followUserLocation}) => {
     }
     requestPermissions();
   }, []);
+
   useEffect(() => {
     const getFacilities = async () => {
       const {data} = await axios.get<IFacility[]>(
         'https://going.run.goorm.io/facilities',
         {
-          params: {lng: coords[0], lat: coords[1], distance: 4000, limit: 50},
+          params: {
+            lng: coordsForUpdate[0],
+            lat: coordsForUpdate[1],
+            distance: 4000,
+            limit: 50,
+          },
         },
       );
       setFacilities(data);
     };
     getFacilities();
-  }, [coords]);
+  }, [coordsForUpdate]);
+
+  useEffect(() => {
+    if (facility && facility instanceof Object) {
+      setSelectedFacility(facility);
+      cameraRef.current?.moveTo(facility.location.coordinates, 1000);
+      cameraRef.current?.zoomTo(15);
+      //setCoords(facility.location.coordinates);
+      //setZoomLevel(15);
+    }
+  }, [facility]);
+
   return (
     <>
       {isGranted && (
         <>
           <MapComponents
-            initializeCoords={coords}
+            centerCoordinate={coords}
             heading={heading}
-            followUserLocation={followUserLocation}
+            //followUserLocation={followUserLocation}
             onUpdate={onUpdate}
             onRegionDidChange={onRegionDidChange}
             onPressMarker={onPressMarker}
             onPressMap={onPressMap}
             facilities={facilities}
+            selectedFacility={selectedFacility}
             zoomLevel={zoomLevel}
+            cameraRef={cameraRef}
           />
 
           <FacilityInfoScreen
