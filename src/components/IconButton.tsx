@@ -14,9 +14,9 @@ const StyledButton = styled.View`
   align-items: center;
   justify-content: center;
 
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: ${wp('9%')};
+  height: ${wp('9%')};
+  border-radius: ${wp('2%')};
   background-color: white;
 `;
 
