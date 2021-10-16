@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -21,13 +21,28 @@ import MapScreen from './MapScreen';
 import HardRoadComponents from '../components/HardRoad';
 import SearchButton from '../components/SearchButton';
 
-interface IProps {}
+import {useRoute} from '@react-navigation/core';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RouteProp} from '@react-navigation/native';
+import {StackParamList} from '../utils/stackParmaList';
+import {IFacility} from '../types/facility';
 
-const HomeScreen: React.FC<IProps> = () => {
+interface IProps {
+  navigation: StackNavigationProp<StackParamList, 'Home'>;
+  route: RouteProp<StackParamList, 'Home'>;
+}
+
+const HomeScreen: React.FC<IProps> = ({route}) => {
   const sheetRef = useRef<BottomSheet | null>(null);
   const sheetContainerValue = useRef<Animated.Value>(
     new Animated.Value(0),
   ).current;
+
+  // const {facility} = useRoute<RouteProp<StackParamList, 'Home'>>().params;
+
+  useEffect(() => {
+    console.log('wa', route.params);
+  }, [route.params]);
 
   const bottomSheeetAnimatedStart = (open: boolean) => {
     Animated.timing(sheetContainerValue, {
@@ -62,7 +77,11 @@ const HomeScreen: React.FC<IProps> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <MapScreen />
+      <MapScreen
+        followUserLocation={false}
+        facility={route.params ? route.params.facility : false}
+      />
+
       <SearchButton />
 
       <Animated.View
@@ -72,6 +91,7 @@ const HomeScreen: React.FC<IProps> = () => {
         ]}
         onTouchEnd={onClickBottomSheetContainer}
       />
+
       <BottomSheet
         ref={sheetRef}
         snapPoints={[hp('85%'), 300, 0]}
