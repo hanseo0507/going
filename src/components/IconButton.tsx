@@ -13,9 +13,8 @@ const StyledButton = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  width: ${wp('9%')};
-  height: ${wp('9%')};
+  width: ${wp('14')};
+  height: ${wp('14%')};
   border-radius: ${wp('2%')};
   background-color: white;
 `;
@@ -34,7 +33,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   ...props
 }) => {
   return (
-    <StyledButton style={{elevation: 3}} {...props}>
+    <StyledButton style={{elevation: 5, shadowColor: '#B4B4B4'}} {...props}>
       {type === 'icon' ? (
         <Icon
           name={iconName}

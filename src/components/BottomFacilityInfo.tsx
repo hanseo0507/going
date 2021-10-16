@@ -12,7 +12,7 @@ import {TEXT_CAPTION, TEXT_DEFAULT} from '../utils/color';
 
 const SyltedView = styled.View`
   width: ${wp('100%')};
-  z-index: 3;
+  z-index: 4;
   padding: 25px;
   padding-bottom: 15px;
   border-top-right-radius: 20px;
