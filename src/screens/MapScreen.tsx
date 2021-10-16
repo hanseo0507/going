@@ -120,6 +120,8 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
   const onPressFindRoad = () => {
     setFindFacility(selectedFacility);
     setIsFinding(true);
+    setSelectedFacility(null);
+    setOldFacility(null);
   };
 
   const onPressCancleFindDirection = () => {

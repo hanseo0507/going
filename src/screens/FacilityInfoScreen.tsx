@@ -65,7 +65,7 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
   }, [facility]);
 
   useEffect(() => {
-    animateStart(!isFinding);
+    isFinding === true && animateStart(false);
   }, [isFinding]);
 
   return (
