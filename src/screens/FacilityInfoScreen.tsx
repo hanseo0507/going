@@ -14,11 +14,12 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import Button from '../components/Button';
+import BottomSupport from '../components/BottomSupport';
 
 const ScreenContainer = styled.View<{showInfo: boolean}>`
   position: absolute;
   bottom: 0;
-  z-index: ${props => (props.showInfo ? 4 : 3)};
+  z-index: ${props => (props.showInfo ? 6 : 3)};
   flex-direction: column;
 
   justify-content: flex-start;
@@ -30,46 +31,58 @@ export interface FacilityInfoScreenProps {
 
   onPressFindRoad: () => void;
   onTouchEnd: (event: any) => void;
+  onSupportTouchEnd: (event: any) => void;
   followUserLocation: boolean;
 
   isFinding: boolean;
   onPressCancleFindDirection: () => void;
+
+  showSupport: boolean;
 }
 
 const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
   facility,
   oldFacility,
   onTouchEnd,
+  onSupportTouchEnd,
   onPressFindRoad,
   onPressCancleFindDirection,
-  followUserLocation,
+
   isFinding,
+  showSupport,
 }) => {
   const infoYValue = useRef<Animated.Value>(
     new Animated.Value(Dimensions.get('window').height),
   ).current;
+  const supportYValue = useRef<Animated.Value>(
+    new Animated.Value(Dimensions.get('window').height),
+  ).current;
   const [hide, setHide] = useState(false);
 
-  const animateStart = (open: boolean) => {
-    Animated.timing(infoYValue, {
+  const animateStart = (value: Animated.Value, open: boolean) => {
+    Animated.timing(value, {
       toValue: open ? 0 : Dimensions.get('window').height,
       duration: 300,
       useNativeDriver: true,
     }).start();
-    open ? setHide(false) : setTimeout(() => setHide(true), 300);
+    // open ? setHide(false) : setTimeout(() => setHide(true), 300);
   };
 
   useEffect(() => {
-    animateStart(Boolean(facility));
+    animateStart(infoYValue, Boolean(facility));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [facility]);
 
   useEffect(() => {
-    isFinding === true && animateStart(false);
+    isFinding === true && animateStart(infoYValue, false);
   }, [isFinding]);
 
+  useEffect(() => {
+    animateStart(supportYValue, showSupport);
+  }, [showSupport]);
+
   return (
-    <ScreenContainer showInfo={!hide && (facility || oldFacility)}>
+    <ScreenContainer showInfo={Boolean(facility) || showSupport}>
       <View
         style={{
           width: wp('100%'),
@@ -77,7 +90,9 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
           alignItems: 'flex-end',
           padding: wp('5%'),
           paddingBottom:
-            !hide && (facility || oldFacility) ? hp('2.5%') : hp('8%'),
+            (!hide && (facility || oldFacility)) || showSupport
+              ? hp('2.5%')
+              : hp('8%'),
         }}>
         {isFinding && (
           <Button
@@ -91,10 +106,21 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
         <IconButton
           type="image"
           onTouchEnd={onTouchEnd}
-          style={{marginBottom: isFinding ? hp('1.5%') : 0}}>
+          style={{marginBottom: isFinding || showSupport ? hp('1.5%') : 0}}>
           <GPSBlackSVG />
         </IconButton>
+
+        <IconButton
+          type="icon"
+          iconName="award-outline"
+          style={{marginBottom: hp('1.5')}}
+          onTouchEnd={onSupportTouchEnd}
+        />
       </View>
+
+      <Animated.View style={{transform: [{translateY: supportYValue}]}}>
+        {showSupport && <BottomSupport />}
+      </Animated.View>
 
       <Animated.View
         style={{

@@ -43,6 +43,7 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
   const [findFacility, setFindFacility] = useState<IFacility | null>(null);
   const [oldFacility, setOldFacility] = useState<IFacility | null>(null);
   const [isFinding, setIsFinding] = useState<boolean>(false);
+  const [showSupport, setShowSupport] = useState<boolean>(false);
 
   const getLocation = (): Promise<{coords: number[]; heading: number}> => {
     return new Promise((resolve, reject) => {
@@ -103,6 +104,7 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
   const onPressMap = () => {
     setOldFacility(selectedFacility);
     setSelectedFacility(null);
+    setShowSupport(false);
   };
 
   const onPressGPSButton = async () => {
@@ -128,6 +130,10 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
     setIsFinding(false);
     setOldFacility(null);
     setSelectedFacility(null);
+  };
+
+  const onSupportTouchEnd = () => {
+    setShowSupport(true);
   };
 
   useEffect(() => {
@@ -212,6 +218,8 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
             onPressFindRoad={onPressFindRoad}
             isFinding={isFinding}
             onPressCancleFindDirection={onPressCancleFindDirection}
+            showSupport={showSupport}
+            onSupportTouchEnd={onSupportTouchEnd}
           />
         </>
       )}
