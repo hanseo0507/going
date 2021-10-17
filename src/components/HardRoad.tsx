@@ -51,6 +51,7 @@ const HardRoadComponents: React.FC<IProps> = () => {
       <ViewWrapper>
         <TextTilte weight={600}>가기힘든 길</TextTilte>
         <TextCaption weight={400}>가기힘든 길을 표시할까요?</TextCaption>
+
         <Toggle
           containerStyle={styles.switch}
           trackBarStyle={{
@@ -58,7 +59,7 @@ const HardRoadComponents: React.FC<IProps> = () => {
           }}
           trackBar={{
             width: wp('23%'),
-            height: hp('6.5%'),
+            height: hp('5.5%'),
             borderWidth: 6,
             activeBackgroundColor: TEXT_DEFAULT,
             inActiveBackgroundColor: TEXT_DISABLE,
@@ -106,7 +107,15 @@ const styles = StyleSheet.create({
     elevation: 10,
     shadowColor: '#B8B8B8',
     borderRadius: 15,
+    flex: 1,
   },
-  switch: {flex: 1, justifyContent: 'flex-end'},
+  switch: {
+    flex: 1,
+
+    justifyContent: 'flex-end',
+    bottom: 0,
+    marginBottom: hp('-7%'),
+    marginRight: wp('-2.5%'),
+  },
 });
 export default HardRoadComponents;
