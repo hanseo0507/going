@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import {
   widthPercentageToDP as wp,
@@ -13,7 +12,7 @@ interface IProps {
 
 const StyledFooter = styled.TouchableOpacity`
   position: absolute;
-  z-index: 5;
+  z-index: 3;
   width: 100%;
   bottom: ${hp('-3%')};
   height: ${hp('9%')};
