@@ -43,6 +43,7 @@ const HomeScreen: React.FC<IProps> = ({route}) => {
   ).current;
   const [showSearch, setShowSearch] = useState<boolean>(true);
   const [startAt, setStartAt] = useState<Date>(new Date());
+  const [active, setActive] = useState<boolean>(true);
 
   const bottomSheeetAnimatedStart = (open: boolean) => {
     Animated.timing(sheetContainerValue, {
@@ -67,7 +68,7 @@ const HomeScreen: React.FC<IProps> = ({route}) => {
             안녕하세요 사용자님 ✋
           </Text>
         </View>
-        <FacilityComponents />
+        <FacilityComponents count={active ? 1 : 0} />
         <View style={styles.greetLayer}>
           <HardRoadComponents />
           <ServicePreparationComponents />
@@ -75,6 +76,10 @@ const HomeScreen: React.FC<IProps> = ({route}) => {
       </View>
     );
   };
+
+  useEffect(() => {
+    setActive(route.params ? route.params.active : false);
+  }, [route.params]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -84,6 +89,7 @@ const HomeScreen: React.FC<IProps> = ({route}) => {
         setShowSearch={setShowSearch}
         startAt={startAt}
         setStartAt={setStartAt}
+        active={active}
       />
 
       {showSearch ? <SearchButton /> : <Timer startAt={startAt} />}

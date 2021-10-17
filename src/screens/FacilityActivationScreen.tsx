@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, TouchableHighlight, View, FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {Icon} from 'react-native-eva-icons';
@@ -13,11 +13,24 @@ import ToggleSwitchComponents from '../components/ToggleSwitch';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import IconSwitch from '../components/IconSwitch';
 
-interface IProps {}
+import BatchChairActiveIcon from '../assets/BatchChairIcon_Active.svg';
+import BatchChairNoneIcon from '../assets/BatchChairIcon_None.svg';
+import WelfareFacilityNoneIcon from '../assets/WelfareFacility_None.svg';
+import FreeMealNoneIcon from '../assets/FreeMeal_None.svg';
+import {StackParamList} from '../utils/stackParmaList';
+import {RouteProp} from '@react-navigation/native';
 
-const FacilityActivationScreen: React.FC<IProps> = () => {
-  const navigation: any = useNavigation();
+interface IProps {
+  route: RouteProp<StackParamList, 'Activation'>;
+}
+
+const FacilityActivationScreen: React.FC<IProps> = ({route}) => {
+  const navigation = useNavigation();
   const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    setActive(route.params.active || false);
+  }, []);
 
   return (
     <SafeAreaView style={styles.contaner}>
@@ -25,7 +38,9 @@ const FacilityActivationScreen: React.FC<IProps> = () => {
         <TouchableHighlight
           style={styles.icon}
           underlayColor={'#C4C4C4'}
-          onPress={() => navigation.goBack()}>
+          onPress={() =>
+            navigation.navigate('Home' as never, {active} as never)
+          }>
           <Icon
             name="arrow-back-outline"
             width={wp('8%')}
@@ -48,16 +63,61 @@ const FacilityActivationScreen: React.FC<IProps> = () => {
             isActivate={active}
             onTouchEnd={() => setActive(!active)}
             margin
+            activeComponent={
+              <BatchChairActiveIcon
+                width="35%"
+                height="35%"
+                style={{marginTop: hp('2%')}}
+              />
+            }
+            noneComponent={
+              <BatchChairNoneIcon
+                width="35%"
+                height="35%"
+                style={{marginTop: hp('2%')}}
+              />
+            }
+            text="휠체어"
           />
           <IconSwitch
             isActivate={active}
             onTouchEnd={() => setActive(!active)}
             margin
+            text="복지시설"
+            activeComponent={
+              <WelfareFacilityNoneIcon
+                width="35%"
+                height="35%"
+                style={{marginTop: hp('2%')}}
+              />
+            }
+            noneComponent={
+              <WelfareFacilityNoneIcon
+                width="35%"
+                height="35%"
+                style={{marginTop: hp('2%')}}
+              />
+            }
           />
           <IconSwitch
             isActivate={active}
             onTouchEnd={() => setActive(!active)}
             margin
+            text="무료급식소"
+            activeComponent={
+              <FreeMealNoneIcon
+                width="35%"
+                height="35%"
+                style={{marginTop: hp('2%')}}
+              />
+            }
+            noneComponent={
+              <FreeMealNoneIcon
+                width="35%"
+                height="35%"
+                style={{marginTop: hp('2%')}}
+              />
+            }
           />
         </View>
       </View>

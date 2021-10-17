@@ -27,6 +27,7 @@ export interface MapScreenProps {
   setShowSearch: React.Dispatch<React.SetStateAction<boolean>>;
   startAt: Date;
   setStartAt: React.Dispatch<React.SetStateAction<Date>>;
+  active: boolean;
 }
 
 const MapScreen: React.FC<MapScreenProps> = ({
@@ -35,6 +36,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
   setShowSearch,
   startAt,
   setStartAt,
+  active,
 }) => {
   const cameraRef = useRef<MapboxGL.Camera>(null);
 
@@ -272,6 +274,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
             followUserLocation={followUserLocation}
             isFinding={isFinding}
             userLocation={coords}
+            active={active}
           />
 
           {showWarningSelect && (

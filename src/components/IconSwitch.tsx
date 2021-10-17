@@ -31,12 +31,19 @@ const styles = StyleSheet.create({
 export interface IconSwitchProps extends ViewProps {
   isActivate: boolean;
   margin: boolean;
+
+  text: string;
+  activeComponent: React.ReactNode;
+  noneComponent: React.ReactNode;
 }
 
 const IconSwitch: React.FC<IconSwitchProps> = ({
   isActivate,
   onTouchEnd,
   margin,
+  activeComponent,
+  noneComponent,
+  text,
   ...props
 }) => {
   return (
@@ -48,20 +55,8 @@ const IconSwitch: React.FC<IconSwitchProps> = ({
       ]}
       onTouchEnd={onTouchEnd}
       {...props}>
-      {isActivate ? (
-        <BatchChairActiveIcon
-          width="35%"
-          height="35%"
-          style={{marginTop: hp('2%')}}
-        />
-      ) : (
-        <BatchChairNoneIcon
-          width="35%"
-          height="35%"
-          style={{marginTop: hp('2%')}}
-        />
-      )}
-      <Text style={styles.text}>휠체어</Text>
+      {isActivate ? activeComponent : noneComponent}
+      <Text style={styles.text}>{text}</Text>
     </View>
   );
 };

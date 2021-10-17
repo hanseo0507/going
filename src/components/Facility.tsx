@@ -11,7 +11,9 @@ import Text from '../components/Text';
 import {TEXT_CAPTION, UI_LINE, UI_WHITE} from '../utils/color';
 import styled from 'styled-components/native';
 
-interface IProps {}
+interface IProps {
+  count: number;
+}
 
 const Header = styled.TouchableOpacity`
   margin-left: ${wp('4%')};
@@ -55,19 +57,19 @@ const Caption = styled(Text)`
   margin-top: ${hp('0.2%')};
   color: ${TEXT_CAPTION};
 `;
-const FacilityComponents: React.FC<IProps> = () => {
+const FacilityComponents: React.FC<IProps> = ({count}) => {
   const navigation: any = useNavigation();
 
   return (
     <ViewContainer style={styles.elevation}>
       <Header
         onPress={() => {
-          navigation.navigate('Activation');
+          navigation.navigate('Activation', {active: Boolean(count)});
         }}>
         <HeaderWrapper>
           <TitleText>시설</TitleText>
           <CountWrapper>
-            <CountText>0</CountText>
+            <CountText>{count}</CountText>
           </CountWrapper>
         </HeaderWrapper>
         <Caption weight={400}>활성화된 시설</Caption>

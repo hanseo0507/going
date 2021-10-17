@@ -53,6 +53,7 @@ interface MapComponentsProps {
 
   isFinding: boolean;
   userLocation: number[];
+  active: boolean;
 }
 
 const MapComponents: React.FC<MapComponentsProps> = ({
@@ -69,6 +70,7 @@ const MapComponents: React.FC<MapComponentsProps> = ({
 
   isFinding,
   userLocation,
+  active,
 }) => {
   return (
     <>
@@ -118,7 +120,11 @@ const MapComponents: React.FC<MapComponentsProps> = ({
               type: 'Feature',
               geometry: {type: 'Point', coordinates: v.location.coordinates},
               id: v._id,
-              properties: {...v, isSelected: v._id === selectedFacility?._id},
+              properties: {
+                ...v,
+                isSelected: v._id === selectedFacility?._id,
+                active,
+              },
             })),
           }}
           onPress={onPressMarker}>
@@ -129,9 +135,8 @@ const MapComponents: React.FC<MapComponentsProps> = ({
               iconSize: 0.055,
               iconRotationAlignment: 'map',
             }}
-            filter={['==', 'isSelected', true]}
+            filter={['all', ['==', 'isSelected', true], ['==', 'active', true]]}
           />
-
           <MapboxGL.SymbolLayer
             id="pointCount"
             style={{
@@ -142,7 +147,11 @@ const MapComponents: React.FC<MapComponentsProps> = ({
               iconRotationAlignment: 'map',
               iconAllowOverlap: true,
             }}
-            filter={['==', 'isSelected', false]}
+            filter={[
+              'all',
+              ['==', 'isSelected', false],
+              ['==', 'active', true],
+            ]}
           />
         </MapboxGL.ShapeSource>
       </MapboxGL.MapView>
