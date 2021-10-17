@@ -15,7 +15,7 @@ const StyledButton = styled.View`
   justify-content: center;
   width: ${wp('14%')};
   height: ${wp('14%')};
-  border-radius: ${wp('2%')};
+  border-radius: ${wp('3%')};
   background-color: white;
 `;
 
