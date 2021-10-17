@@ -28,15 +28,16 @@ export interface FacilityInfoScreenProps {
   facility: IFacility | null;
   oldFacility: IFacility | null;
 
+  isFinding: boolean;
+  followUserLocation: boolean;
+  showSupport: boolean;
+
   onPressFindRoad: () => void;
   onTouchEnd: (event: any) => void;
   onSupportTouchEnd: (event: any) => void;
-  followUserLocation: boolean;
-
-  isFinding: boolean;
   onPressCancleFindDirection: () => void;
-
-  showSupport: boolean;
+  onPressOK: () => void;
+  onPressLater: () => void;
 }
 
 const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
@@ -46,6 +47,8 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
   onSupportTouchEnd,
   onPressFindRoad,
   onPressCancleFindDirection,
+  onPressOK,
+  onPressLater,
 
   isFinding,
   showSupport,
@@ -64,7 +67,7 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
       duration: 300,
       useNativeDriver: true,
     }).start();
-    // open ? setHide(false) : setTimeout(() => setHide(true), 300);
+    open ? setHide(false) : setTimeout(() => setHide(true), 300);
   };
 
   useEffect(() => {
@@ -106,7 +109,7 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
           type="image"
           onTouchEnd={onTouchEnd}
           style={{marginBottom: isFinding || showSupport ? hp('1.5%') : 0}}>
-          <GPSBlackSVG />
+          <GPSBlackSVG width="47%" height="47%" />
         </IconButton>
 
         <IconButton
@@ -118,7 +121,9 @@ const FacilityInfoScreen: React.FC<FacilityInfoScreenProps> = ({
       </View>
 
       <Animated.View style={{transform: [{translateY: supportYValue}]}}>
-        {showSupport && <BottomSupport />}
+        {showSupport && (
+          <BottomSupport onPressOK={onPressOK} onPressLater={onPressLater} />
+        )}
       </Animated.View>
 
       <Animated.View

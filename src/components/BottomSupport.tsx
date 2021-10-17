@@ -35,8 +35,8 @@ const DescriptionText = styled(Text)`
 `;
 
 export interface BottomSupportProps extends ViewProps {
-  onPressOK?: () => void;
-  onPressLater?: () => void;
+  onPressOK: () => void;
+  onPressLater: () => void;
 }
 
 const BottomSupport: React.FC<BottomSupportProps> = ({
@@ -73,10 +73,10 @@ const BottomSupport: React.FC<BottomSupportProps> = ({
       <View style={{marginTop: hp('1%')}}>
         <Button
           label="다음에 할래요"
-          onPress={onPressLater}
           text={{weight: 700}}
           color="white"
           textColor={TEXT_DEFAULT}
+          onPress={onPressLater}
         />
       </View>
     </SyltedView>

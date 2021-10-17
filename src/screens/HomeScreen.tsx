@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   SafeAreaView,
@@ -28,6 +28,7 @@ import {RouteProp} from '@react-navigation/native';
 import {StackParamList} from '../utils/stackParmaList';
 import {IFacility} from '../types/facility';
 import {ScrollView} from 'react-native-gesture-handler';
+import Timer from '../components/Timer';
 
 interface IProps {
   navigation: StackNavigationProp<StackParamList, 'Home'>;
@@ -39,12 +40,8 @@ const HomeScreen: React.FC<IProps> = ({route}) => {
   const sheetContainerValue = useRef<Animated.Value>(
     new Animated.Value(0),
   ).current;
-
-  // const {facility} = useRoute<RouteProp<StackParamList, 'Home'>>().params;
-
-  useEffect(() => {
-    console.log('wa', route.params);
-  }, [route.params]);
+  const [showSearch, setShowSearch] = useState<boolean>(true);
+  const [startAt, setStartAt] = useState<Date>(new Date());
 
   const bottomSheeetAnimatedStart = (open: boolean) => {
     Animated.timing(sheetContainerValue, {
@@ -80,9 +77,15 @@ const HomeScreen: React.FC<IProps> = ({route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <MapScreen facility={route.params ? route.params.facility : false} />
+      <MapScreen
+        facility={route.params ? route.params.facility : false}
+        showSearch={showSearch}
+        setShowSearch={setShowSearch}
+        startAt={startAt}
+        setStartAt={setStartAt}
+      />
 
-      <SearchButton />
+      {showSearch ? <SearchButton /> : <Timer startAt={startAt} />}
 
       <Animated.View
         style={[

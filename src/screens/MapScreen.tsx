@@ -1,7 +1,8 @@
 /* eslint-disable prettier/prettier */
 import React, {useEffect, useRef, useState} from 'react';
 import Geolocation from 'react-native-geolocation-service';
-import {PermissionsAndroid, Platform, View} from 'react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import MapComponents from '../components/Map';
 import MapboxGL, {
   OnPressEvent,
@@ -21,9 +22,19 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 export interface MapScreenProps {
   facility: IFacility | boolean;
+  showSearch: boolean;
+  setShowSearch: React.Dispatch<React.SetStateAction<boolean>>;
+  startAt: Date;
+  setStartAt: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
+const MapScreen: React.FC<MapScreenProps> = ({
+  facility,
+  showSearch,
+  setShowSearch,
+  startAt,
+  setStartAt,
+}) => {
   const cameraRef = useRef<MapboxGL.Camera>(null);
 
   const [coords, setCoords] = useState<number[]>([0, 0]);
@@ -44,6 +55,7 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
   const [oldFacility, setOldFacility] = useState<IFacility | null>(null);
   const [isFinding, setIsFinding] = useState<boolean>(false);
   const [showSupport, setShowSupport] = useState<boolean>(false);
+  const [isSupport, setIsSupporting] = useState<boolean>(false);
 
   const getLocation = (): Promise<{coords: number[]; heading: number}> => {
     return new Promise((resolve, reject) => {
@@ -120,8 +132,10 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
   };
 
   const onPressFindRoad = () => {
+    setShowSupport(true);
+    setStartAt(new Date());
+
     setFindFacility(selectedFacility);
-    setIsFinding(true);
     setSelectedFacility(null);
     setOldFacility(null);
   };
@@ -130,10 +144,24 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
     setIsFinding(false);
     setOldFacility(null);
     setSelectedFacility(null);
+    setIsSupporting(false);
+    setShowSearch(true);
   };
 
   const onSupportTouchEnd = () => {
     setShowSupport(true);
+  };
+
+  const onPressOK = () => {
+    setShowSupport(false);
+    findFacility && setIsFinding(true);
+    setIsSupporting(true);
+    setShowSearch(false);
+  };
+
+  const onPressLater = () => {
+    setShowSupport(false);
+    findFacility && setIsFinding(true);
   };
 
   useEffect(() => {
@@ -184,8 +212,6 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
         zoomLevel: 16,
         animationDuration: 2000,
       });
-      //setCoords(facility.location.coordinates);
-      //setZoomLevel(15);
     }
   }, [facility]);
 
@@ -220,6 +246,8 @@ const MapScreen: React.FC<MapScreenProps> = ({facility}) => {
             onPressCancleFindDirection={onPressCancleFindDirection}
             showSupport={showSupport}
             onSupportTouchEnd={onSupportTouchEnd}
+            onPressOK={onPressOK}
+            onPressLater={onPressLater}
           />
         </>
       )}
