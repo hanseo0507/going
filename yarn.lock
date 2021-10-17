@@ -7457,6 +7457,13 @@ react-mui-mapbox-geocoder@^2.0.1:
     react-autosuggest "^10.1.0"
     use-debounce "^7.0.0"
 
+react-native-animated-splash-screen@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/react-native-animated-splash-screen/-/react-native-animated-splash-screen-2.0.5.tgz#5dcfafc2841a8b0636662eaf6980e791d9acc7e1"
+  integrity sha512-VTZmcYHQq8lxtVtiXQFJKGSSftewI+F3hgLY0ONBA2g3GP/jIgLJHoShup4HBLeA0Q2mjvyNT39JpfTDcLKtHQ==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-codegen@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.7.tgz#86651c5c5fec67a8077ef7f4e36f7ed459043e14"
