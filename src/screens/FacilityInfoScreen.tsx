@@ -21,7 +21,6 @@ const ScreenContainer = styled.View<{showInfo: boolean}>`
   bottom: 0;
   z-index: ${props => (props.showInfo ? 6 : 3)};
   flex-direction: column;
-
   justify-content: flex-start;
 `;
 

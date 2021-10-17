@@ -37,7 +37,7 @@ const TextTilte = styled(Text)`
 `;
 
 const TextCaption = styled(Text)`
-  font-size: ${wp('3.5%')};
+  font-size: ${wp('3.2%')};
   margin-top: ${hp('-2.5%')};
   color: ${TEXT_CAPTION};
 `;

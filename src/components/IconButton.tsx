@@ -13,7 +13,7 @@ const StyledButton = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${wp('14')};
+  width: ${wp('14%')};
   height: ${wp('14%')};
   border-radius: ${wp('2%')};
   background-color: white;
@@ -37,8 +37,8 @@ const IconButton: React.FC<IconButtonProps> = ({
       {type === 'icon' ? (
         <Icon
           name={iconName}
-          width={wp('5.7%')}
-          height={hp('5.7%')}
+          width={wp('8%')}
+          height={hp('8%')}
           fill={TEXT_DEFAULT || color}
         />
       ) : (

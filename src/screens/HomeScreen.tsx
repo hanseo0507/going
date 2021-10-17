@@ -20,12 +20,14 @@ import FacilityComponents from '../components/Facility';
 import MapScreen from './MapScreen';
 import HardRoadComponents from '../components/HardRoad';
 import SearchButton from '../components/SearchButton';
+import ServicePreparationComponents from '../components/ServicePreparation';
 
 import {useRoute} from '@react-navigation/core';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {StackParamList} from '../utils/stackParmaList';
 import {IFacility} from '../types/facility';
+import {ScrollView} from 'react-native-gesture-handler';
 
 interface IProps {
   navigation: StackNavigationProp<StackParamList, 'Home'>;
@@ -70,6 +72,7 @@ const HomeScreen: React.FC<IProps> = ({route}) => {
         <FacilityComponents />
         <View style={styles.greetLayer}>
           <HardRoadComponents />
+          <ServicePreparationComponents />
         </View>
       </View>
     );
@@ -127,6 +130,7 @@ const styles = StyleSheet.create({
   greetLayer: {
     flex: 1,
     alignItems: 'flex-start',
+    flexDirection: 'row',
   },
   greet: {
     fontSize: wp('6%'),
