@@ -56,6 +56,9 @@ const MapScreen: React.FC<MapScreenProps> = ({
   const [isFinding, setIsFinding] = useState<boolean>(false);
   const [showSupport, setShowSupport] = useState<boolean>(false);
   const [isSupport, setIsSupporting] = useState<boolean>(false);
+  const [locations, setLocations] = useState<{id: number; coords: number[]}[]>(
+    [],
+  );
 
   const getLocation = (): Promise<{coords: number[]; heading: number}> => {
     return new Promise((resolve, reject) => {
@@ -74,6 +77,18 @@ const MapScreen: React.FC<MapScreenProps> = ({
       );
     });
   };
+
+  useEffect(() => {
+    let interval: NodeJS.Timer;
+    if (isSupport) {
+      interval = setInterval(async () => {
+        const {coords} = await getLocation();
+        setLocations(prev => [...prev, {id: prev.length + 1, coords}]);
+      }, 1000);
+    }
+
+    return () => clearInterval(interval);
+  }, [isSupport]);
 
   const onUpdate = async (location: MapboxGL.Location) => {
     const {longitude, latitude} = location.coords;
@@ -155,7 +170,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
   const onPressOK = () => {
     setShowSupport(false);
     findFacility && setIsFinding(true);
-    setIsSupporting(true);
+    findFacility && setIsSupporting(true);
     setShowSearch(false);
   };
 
