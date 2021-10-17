@@ -8,7 +8,7 @@ import {
 import Button from './Button';
 import Text from './Text';
 import EmojiSmilePNG from '../assets/EmojiSmileIOS.png';
-import {TEXT_CAPTION} from '../utils/color';
+import {TEXT_CAPTION, TEXT_DEFAULT} from '../utils/color';
 
 const SyltedView = styled.View`
   width: ${wp('100%')};
@@ -24,11 +24,6 @@ const TextWrapper = styled.View`
   margin-bottom: ${hp('4%')};
 `;
 
-const HeaderWrapper = styled.View`
-  justify-content: space-between;
-  flex-direction: row;
-`;
-
 const TitleText = styled(Text)`
   font-size: 20;
 `;
@@ -39,9 +34,15 @@ const DescriptionText = styled(Text)`
   margin-top: ${hp('-1%')};
 `;
 
-export interface BottomSupportProps extends ViewProps {}
+export interface BottomSupportProps extends ViewProps {
+  onPressOK?: () => void;
+  onPressLater?: () => void;
+}
 
-const BottomSupport: React.FC<BottomSupportProps> = ({}) => {
+const BottomSupport: React.FC<BottomSupportProps> = ({
+  onPressOK,
+  onPressLater,
+}) => {
   return (
     <SyltedView>
       <View>
@@ -68,7 +69,16 @@ const BottomSupport: React.FC<BottomSupportProps> = ({}) => {
           </DescriptionText>
         </TextWrapper>
       </View>
-      <Button label="공유 시작" onPress={() => {}} text={{weight: 700}} />
+      <Button label="공유 시작" onPress={onPressOK} text={{weight: 700}} />
+      <View style={{marginTop: hp('1%')}}>
+        <Button
+          label="다음에 할래요"
+          onPress={onPressLater}
+          text={{weight: 700}}
+          color="white"
+          textColor={TEXT_DEFAULT}
+        />
+      </View>
     </SyltedView>
   );
 };
