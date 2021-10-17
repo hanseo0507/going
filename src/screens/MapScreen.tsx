@@ -19,6 +19,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import BottomStopSharing from '../components/BottomStopSharing';
 
 export interface MapScreenProps {
   facility: IFacility | boolean;
@@ -250,7 +251,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
             isFinding={isFinding}
             userLocation={coords}
           />
-
+          <BottomStopSharing />
           <FacilityInfoScreen
             facility={selectedFacility}
             oldFacility={oldFacility}
