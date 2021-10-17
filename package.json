@@ -16,6 +16,7 @@
     "@react-native-async-storage/async-storage": "^1.15.9",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-mapbox-gl/maps": "^8.3.0",
+    "@react-native-voice/voice": "^3.2.2",
     "@react-navigation/native": "^6.0.4",
     "@react-navigation/stack": "^6.0.9",
     "@seanhouli/react-mapbox-search": "^1.0.5",

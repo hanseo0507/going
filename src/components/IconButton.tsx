@@ -39,7 +39,7 @@ const IconButton: React.FC<IconButtonProps> = ({
           name={iconName}
           width={wp('8%')}
           height={hp('8%')}
-          fill={TEXT_DEFAULT || color}
+          fill={color || TEXT_DEFAULT}
         />
       ) : (
         children

@@ -1,5 +1,7 @@
 rootProject.name = 'going'
 include ':react-native-svg'
+include ':@react-native-voice_voice', ':app'
+project(':@react-native-voice_voice').projectDir = new File(rootProject.projectDir, '../node_modules/@react-native-voice/voice/android')
 project(':react-native-svg').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-svg/android')
 include ':react-native-safe-area-context'
 project(':react-native-safe-area-context').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-safe-area-context/android')
