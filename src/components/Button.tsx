@@ -9,14 +9,22 @@ interface IProps extends ViewProps {
   onPress: () => void;
   text: TextProps & {weight: number};
   width?: string | number;
+  color?: string;
+  textColor?: string;
 }
 
 const Button: React.FC<IProps> = props => {
   return (
     <TouchableOpacity
-      style={[styles.container, {width: props.width}, props.style]}
+      style={[
+        styles.container,
+        {width: props.width, backgroundColor: props.color || '#323232'},
+        props.style,
+      ]}
       {...props}>
-      <Text style={styles.label} {...props.text}>
+      <Text
+        style={[styles.label, {color: props.textColor || UI_WHITE}]}
+        {...props.text}>
         {props.label}
       </Text>
     </TouchableOpacity>
@@ -28,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 12,
-    backgroundColor: '#323232',
+
     shadowColor: UI_WHITE,
     shadowOffset: {
       width: 0,
@@ -39,7 +47,6 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   label: {
-    color: UI_WHITE,
     fontSize: 15,
     paddingTop: 2,
     paddingBottom: 2,
