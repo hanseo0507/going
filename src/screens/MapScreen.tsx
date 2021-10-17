@@ -190,6 +190,9 @@ const MapScreen: React.FC<MapScreenProps> = ({
   const onPressSelect = async (message: string) => {
     setShowSearch(true);
     setShowWarningSelect(false);
+    setSelectedFacility(null);
+    setIsFinding(false);
+    setIsSupporting(false);
     await axios
       .post('https://going.run.goorm.io/routes', {
         targetFacility: findFacility?.name,
@@ -197,10 +200,6 @@ const MapScreen: React.FC<MapScreenProps> = ({
         description: message,
       })
       .catch(error => console.log(error.response.data));
-
-    setSelectedFacility(null);
-    setIsFinding(false);
-    setIsSupporting(false);
   };
 
   useEffect(() => {
