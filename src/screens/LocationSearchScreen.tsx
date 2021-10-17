@@ -247,8 +247,6 @@ const LocationSearchScreen: React.FC<IProps> = () => {
     Voice.onSpeechResults = _onSpeechResults;
     Voice.onSpeechError = _onSpeechError;
 
-    Voice.isAvailable().then(res => setError(res.toString()));
-
     return () => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
