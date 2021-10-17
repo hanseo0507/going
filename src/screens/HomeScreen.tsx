@@ -29,6 +29,7 @@ import {StackParamList} from '../utils/stackParmaList';
 import {IFacility} from '../types/facility';
 import {ScrollView} from 'react-native-gesture-handler';
 import Timer from '../components/Timer';
+import BottomStopSharing from '../components/BottomStopSharing';
 
 interface IProps {
   navigation: StackNavigationProp<StackParamList, 'Home'>;
@@ -103,6 +104,7 @@ const HomeScreen: React.FC<IProps> = ({route}) => {
         renderContent={BottomSheetContent}
         onCloseEnd={onBottomSheetClonseEnd}
       />
+
       <FooterButton sheetRef={sheetRef} />
     </SafeAreaView>
   );
