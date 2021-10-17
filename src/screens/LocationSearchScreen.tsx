@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: UI_WHITE,
     alignItems: 'center',
-    paddingTop: wp('9%'),
+    paddingTop: hp('5.3%'),
   },
 
   searchBarContainer: {

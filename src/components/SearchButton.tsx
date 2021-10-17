@@ -37,7 +37,7 @@ const SearchButton: React.FC = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    top: 35,
+    top: hp('5%'),
     position: 'absolute',
     width: '100%',
     alignItems: 'center',
@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 5,
     paddingLeft: 20,
-    paddingTop: 3,
-    paddingBottom: 3,
+    paddingTop: 5,
+    paddingBottom: 5,
     color: TEXT_DEFAULT,
     textDecorationLine: 'none',
   },
