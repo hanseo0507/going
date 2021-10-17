@@ -60,6 +60,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
   const [locations, setLocations] = useState<{id: number; coords: number[]}[]>(
     [],
   );
+  const [showWarningSelect, setShowWarningSelect] = useState<boolean>(false);
 
   const getLocation = (): Promise<{coords: number[]; heading: number}> => {
     return new Promise((resolve, reject) => {
@@ -157,11 +158,17 @@ const MapScreen: React.FC<MapScreenProps> = ({
   };
 
   const onPressCancleFindDirection = () => {
-    setIsFinding(false);
     setOldFacility(null);
-    setSelectedFacility(null);
-    setIsSupporting(false);
-    setShowSearch(true);
+
+    if (isSupport) {
+      setShowWarningSelect(true);
+    } else {
+      setShowSearch(true);
+      setShowWarningSelect(false);
+      setSelectedFacility(null);
+      setIsFinding(false);
+      setIsSupporting(false);
+    }
   };
 
   const onSupportTouchEnd = () => {
@@ -178,6 +185,22 @@ const MapScreen: React.FC<MapScreenProps> = ({
   const onPressLater = () => {
     setShowSupport(false);
     findFacility && setIsFinding(true);
+  };
+
+  const onPressSelect = async (message: string) => {
+    setShowSearch(true);
+    setShowWarningSelect(false);
+    await axios
+      .post('https://going.run.goorm.io/routes', {
+        targetFacility: findFacility?.name,
+        coords: locations,
+        description: message,
+      })
+      .catch(error => console.log(error.response.data));
+
+    setSelectedFacility(null);
+    setIsFinding(false);
+    setIsSupporting(false);
   };
 
   useEffect(() => {
@@ -251,7 +274,11 @@ const MapScreen: React.FC<MapScreenProps> = ({
             isFinding={isFinding}
             userLocation={coords}
           />
-          <BottomStopSharing />
+
+          {showWarningSelect && (
+            <BottomStopSharing onPressSelect={onPressSelect} />
+          )}
+
           <FacilityInfoScreen
             facility={selectedFacility}
             oldFacility={oldFacility}

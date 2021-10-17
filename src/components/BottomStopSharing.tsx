@@ -7,10 +7,12 @@ import {
 } from 'react-native-responsive-screen';
 import Text from './Text';
 import styled from 'styled-components/native';
-import {TEXT_UNSELECTED} from '../utils/color';
+import {TEXT_UNSELECTED, UI_LINE} from '../utils/color';
 import Button from './Button';
 
-export interface Props {}
+export interface Props {
+  onPressSelect: (message: string) => void;
+}
 
 const SyltedView = styled.View`
   width: ${wp('100%')};
@@ -31,7 +33,7 @@ const CaptionText = styled(Text)`
   font-size: 15;
 `;
 
-const BottomStopSharing: React.FC<Props> = () => {
+const BottomStopSharing: React.FC<Props> = ({onPressSelect}) => {
   const menus = [
     '계단이 있었어요',
     '경사가 심했어요',
@@ -40,15 +42,31 @@ const BottomStopSharing: React.FC<Props> = () => {
     '승강기가 있어요',
     '점자블록이 있어요',
   ];
-  const menuList = menus.map(menu => (
-    <Button label={menu} textColor={TEXT_UNSELECTED} color="white" />
-  ));
+
   return (
     <SyltedView>
       <View>
         <TitleText weight={700}>위치를 중단하시겠습니까?</TitleText>
         <CaptionText>길을 설명해주세요 ! </CaptionText>
-        {menuList}
+        {menus.map((menu, i, arr) => {
+          return (
+            <View
+              key={i}
+              style={{
+                borderTopWidth: 1,
+                borderBottomWidth: arr.length - 1 === i ? 1 : 0,
+                borderColor: UI_LINE,
+              }}>
+              <Button
+                label={menu}
+                textColor={TEXT_UNSELECTED}
+                color="white"
+                onPress={() => onPressSelect(menu)}
+                text={{weight: 400}}
+              />
+            </View>
+          );
+        })}
       </View>
     </SyltedView>
   );
