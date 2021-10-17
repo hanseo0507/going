@@ -216,7 +216,7 @@ const LocationSearchScreen: React.FC<IProps> = () => {
 
     let errMessage: string;
 
-    switch (event.message) {
+    switch (event.error.message) {
       case '7/No match':
         errMessage =
           '말씀하신 내용을 인식하지 못했어요\n다시 한 번 말씀해주세요!';
@@ -225,8 +225,8 @@ const LocationSearchScreen: React.FC<IProps> = () => {
         errMessage =
           '말씀하신 내용을 인식하지 못했어요\n다시 한 번 말씀해주세요!';
     }
-
-    setError(errMessage);
+    console.log(event.error.message);
+    setError(event.error.message);
   };
   const _onRecordVoice = async () => {
     await PermissionsAndroid.request(
@@ -246,6 +246,8 @@ const LocationSearchScreen: React.FC<IProps> = () => {
     Voice.onSpeechEnd = _onSpeechEnd;
     Voice.onSpeechResults = _onSpeechResults;
     Voice.onSpeechError = _onSpeechError;
+
+    Voice.isAvailable().then(res => setError(res.toString()));
 
     return () => {
       Voice.destroy().then(Voice.removeAllListeners);
@@ -281,7 +283,7 @@ const LocationSearchScreen: React.FC<IProps> = () => {
             이렇게 검색하시면 더 쉽게 찾으실 수 있어요!
           </Text>
           <Text weight={400} style={styles.notFoundDescription}>
-            찾으시려는 시설의 이름이나 주소를 입력해주세요!
+            {error}
           </Text>
         </View>
       )}
