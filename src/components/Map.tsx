@@ -6,7 +6,6 @@ import MapboxGL, {
   RegionPayload,
   Logger,
 } from '@react-native-mapbox-gl/maps';
-
 import {IFacility} from '../types/facility';
 import LineLayerComponents from './LineLayer';
 
